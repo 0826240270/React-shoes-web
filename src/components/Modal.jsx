@@ -8,10 +8,11 @@ import { XIcon } from "@heroicons/react/outline";
 const axios = require("axios").default;
 
 const removeItem = (index, items, removeItems) => {
+  const api = "http://intense-retreat-81423.herokuapp.com/";
   items.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(items));
   removeItems(JSON.parse(localStorage.getItem("cart")));
-  axios.post(`/categories/${items._id}?_method=PUT`, items);
+  axios.post(`${api}/categories/${items._id}?_method=PUT`, items);
 };
 
 function Cart({ open, setOpen }) {

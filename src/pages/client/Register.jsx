@@ -44,7 +44,6 @@ let validationSchema = Yup.object().shape({
 function FormRegister() {
   const [showModal, setShowModal] = useState(false);
   // const cancelButtonRef = useRef(null);
-
   // Formik
   const formik = useFormik({
     initialValues,
@@ -52,6 +51,7 @@ function FormRegister() {
     // POST HTTP lên cho server;
     onSubmit: (values) => {
       const formData = new FormData();
+      const api = "http://intense-retreat-81423.herokuapp.com/";
       try {
         formData.append("avatar", values.avatar);
         formData.append("firstName", values.firstName);
@@ -61,7 +61,7 @@ function FormRegister() {
         formData.append("passwo_", values.passwo_);
         formData.append("avatar", "");
         formData.append("address", values.address);
-        axios.post("/register", formData).then((res) => {
+        axios.post(`${api}/register`, formData).then((res) => {
           if (res.data.success) setShowModal(res.data.success);
           else window.alert("This email maybe exists already");
         });

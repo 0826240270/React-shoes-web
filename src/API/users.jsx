@@ -1,8 +1,9 @@
 const axios = require("axios").default;
 
 const fetchInfo = () => {
+  const api = "http://intense-retreat-81423.herokuapp.com/";
   return axios
-    .get("/home")
+    .get(`${api}/home`)
     .then((res) => {
       localStorage.setItem("cart", JSON.stringify(res.data.cart));
       return res.data.infor;

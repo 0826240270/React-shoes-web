@@ -76,11 +76,12 @@ const fetchDetailProducts = (_id) => {
 };
 
 const PostProduct = (detailProducts) => {
+  const api = "http://intense-retreat-81423.herokuapp.com/";
   try {
     let localCart = JSON.parse(localStorage.getItem("cart"));
     localCart.unshift(detailProducts);
     localStorage.setItem("cart", JSON.stringify(localCart));
-    axios.post(`/categories/${detailProducts._id}`);
+    axios.post(`${api}/categories/${detailProducts._id}`);
   } catch (err) {
     console.log(`%c ${err}`, "color: red");
   }
