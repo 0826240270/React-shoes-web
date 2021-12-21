@@ -25,7 +25,7 @@ function Login() {
   const [showModal, setShowModal] = useState(false);
   const [authen, setAuthen] = useState(false);
 
-  const api = "https://intense-retreat-81423.herokuapp.com";
+  const api = "https://be-shoes-web.herokuapp.com";
 
   // Sau khi state thay đổi thì did mound sẽ re-render lại component
   useEffect(() => {

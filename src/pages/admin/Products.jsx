@@ -4,7 +4,7 @@ import { UpSearch } from "./Customers";
 const axios = require("axios").default;
 
 const fetchProducts = () => {
-  const api = "https://intense-retreat-81423.herokuapp.com";
+  const api = "https://be-shoes-web.herokuapp.com";
   return axios
     .get(`${api}/dashboard/products`)
     .then(({ data }) => {

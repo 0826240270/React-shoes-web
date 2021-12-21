@@ -416,7 +416,7 @@ const CollectRequire = () => {
 };
 
 const fetchProducts = () => {
-  const api = "https://intense-retreat-81423.herokuapp.com";
+  const api = "https://be-shoes-web.herokuapp.com";
   return axios
     .get(`${api}/categories`)
     .then(({ data }) => {

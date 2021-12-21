@@ -51,7 +51,7 @@ function FormRegister() {
     // POST HTTP lên cho server;
     onSubmit: (values) => {
       const formData = new FormData();
-      const api = "https://intense-retreat-81423.herokuapp.com";
+      const api = "https://be-shoes-web.herokuapp.com";
       try {
         formData.append("avatar", values.avatar);
         formData.append("firstName", values.firstName);
