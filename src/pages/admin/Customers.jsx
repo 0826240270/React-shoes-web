@@ -4,7 +4,7 @@ const axios = require("axios").default;
 /* This example requires Tailwind CSS v2.0+ */
 
 const fetchCustomers = () => {
-  const api = "http://intense-retreat-81423.herokuapp.com";
+  const api = "https://intense-retreat-81423.herokuapp.com";
   return axios
     .get(`${api}/dashboard/customers`)
     .then(({ data }) => {
