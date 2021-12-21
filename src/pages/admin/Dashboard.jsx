@@ -355,8 +355,9 @@ function DashboardSite() {
 }
 
 const fetchInfo = () => {
+  const api = "http://intense-retreat-81423.herokuapp.com";
   return axios
-    .get("/dashboard/account")
+    .get(`${api}/dashboard/account`)
     .then(({ data }) => {
       return data;
     })
@@ -611,13 +612,15 @@ function AdminArticle() {
 }
 
 function Dashboard() {
-  // const tokenHeader = localStorage.getItem("token");
-  // axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
-  return (
+  const tokenHeader = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
+  return tokenHeader ? (
     <div className="grid grid-flow-row sm:grid-flow-col auto-cols-fr sm:auto-cols-grid-admin h-screen">
       <AdminSidebar />
       <AdminArticle />
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 }
 

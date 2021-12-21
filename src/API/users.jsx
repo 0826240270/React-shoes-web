@@ -1,7 +1,7 @@
 const axios = require("axios").default;
 
 const fetchInfo = () => {
-  const api = "http://intense-retreat-81423.herokuapp.com/";
+  const api = "http://intense-retreat-81423.herokuapp.com";
   return axios
     .get(`${api}/home`)
     .then((res) => {

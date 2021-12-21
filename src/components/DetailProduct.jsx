@@ -76,7 +76,7 @@ const fetchDetailProducts = (_id) => {
 };
 
 const PostProduct = (detailProducts) => {
-  const api = "http://intense-retreat-81423.herokuapp.com/";
+  const api = "http://intense-retreat-81423.herokuapp.com";
   try {
     let localCart = JSON.parse(localStorage.getItem("cart"));
     localCart.unshift(detailProducts);
