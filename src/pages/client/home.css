@@ -1,0 +1,4 @@
+.border-input:focus {
+  border-bottom: 1px solid gray;
+  transition: all 2s ease-out;
+}
