@@ -611,15 +611,13 @@ function AdminArticle() {
 }
 
 function Dashboard() {
-  const tokenHeader = localStorage.getItem("token");
-  axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
-  return tokenHeader ? (
+  // const tokenHeader = localStorage.getItem("token");
+  // axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
+  return (
     <div className="grid grid-flow-row sm:grid-flow-col auto-cols-fr sm:auto-cols-grid-admin h-screen">
       <AdminSidebar />
       <AdminArticle />
     </div>
-  ) : (
-    <Redirect to="/login" />
   );
 }
 
