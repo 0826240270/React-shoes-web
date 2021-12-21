@@ -83,5 +83,6 @@ tailwind
 
 ### Deploy
 
+Production: yarn build
 Github: git push normally
 Firebase: firebase deploy
