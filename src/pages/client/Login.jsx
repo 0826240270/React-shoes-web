@@ -25,7 +25,6 @@ function Login() {
 
   const [showModal, setShowModal] = useState(false);
   const [authen, setAuthen] = useState(false);
-  const api = "http://intense-retreat-81423.herokuapp.com/";
   // Sau khi state thay đổi thì did mound sẽ re-render lại component
   useEffect(() => {
     setPageId(Math.random());
@@ -34,6 +33,7 @@ function Login() {
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
+      const api = "http://intense-retreat-81423.herokuapp.com/";
       axios
         .post(`${api}/login`, {
           email: values.email,
