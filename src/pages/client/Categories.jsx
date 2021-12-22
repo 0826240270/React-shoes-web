@@ -69,9 +69,9 @@ const Pagination = ({ products, postsPerPage, setCurrentPage }) => {
     pageNumber.push(i);
   }
   return (
-    <div className="bg-white px-4 py-5 flex items-center justify-between border-t border-gray-200 sm:px-6">
-      <div className="sm:flex-1 sm:flex sm:items-center sm:justify-between md:flex-col xl:flex-row">
-        <div className="text-center text-sm pb-4 md:pb-5 xl:pb-0 2xl:pb-0">
+    <div className="bg-white px-4 py-5 border-t border-gray-200 sm:px-6">
+      <div className="sm:flex-1 sm:flex sm:items-center sm:justify-center md:flex-col xl:flex-row">
+        <div className="block sm:hidden text-center text-sm pb-4 md:pb-5 xl:pb-0 2xl:pb-0">
           <p className="text-gray-700">
             Showing <span className="font-medium">1</span> to{" "}
             <span className="font-medium">10</span> of{" "}
@@ -80,31 +80,33 @@ const Pagination = ({ products, postsPerPage, setCurrentPage }) => {
         </div>
         <div>
           <nav
-            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            className="relative z-0 inline-flex items-center rounded-md shadow-sm -space-x-px"
             aria-label="Pagination"
           >
             <a
               href="/#"
-              className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              className="relative inline-flex items-center px-2 py-2 border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
             </a>
             {pageNumber &&
               pageNumber.map((page) => (
-                <Link
-                  to="/categories"
-                  key={page}
-                  aria-current="page"
-                  className="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </Link>
+                <div className="px-2">
+                  <Link
+                    to="/categories"
+                    key={page}
+                    aria-current="page"
+                    className="z-10 hover:ring-2 hover:ring-indigo-500 text-indigo-600 relative inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </Link>
+                </div>
               ))}
             <a
               href="/#"
-              className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              className="relative inline-flex items-center px-2 py-2 border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
@@ -479,7 +481,7 @@ function Main() {
               status={items.status}
             />
           ))}
-          <div>
+          <div className="grid place-items-center w-full">
             <Pagination
               products={products}
               postsPerPage={postsPerPage}
