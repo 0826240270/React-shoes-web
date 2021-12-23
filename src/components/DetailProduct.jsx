@@ -65,8 +65,9 @@ const product = {
 };
 
 const fetchDetailProducts = (_id) => {
+  const api = "https://be-shoes-web.herokuapp.com";
   return axios
-    .get(`/categories/${_id}`)
+    .get(`${api}/categories/${_id}`)
     .then((res) => {
       return res.data;
     })
