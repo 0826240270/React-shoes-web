@@ -20,6 +20,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 // Site
 import { ProductsSite } from "./Products";
 import { CustomersSite } from "./Customers";
+import { fetchUser } from "../../API/adminAPI";
 
 // Image
 import Avatar from "../../img/avatar.jpg";
@@ -101,7 +102,7 @@ function AdminSidebar() {
                 <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
                   <GiExitDoor size={23} className="-ml-2" />
                   <span className="text-sm font-semibold pl-3 font-Inter">
-                    Login
+                    Log out
                   </span>
                 </li>
               </Link>
@@ -354,22 +355,25 @@ function DashboardSite() {
   );
 }
 
-const fetchInfo = () => {
-  const api = "https://intense-retreat-81423.herokuapp.com";
-  return axios
-    .get(`${api}/dashboard/account`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
-};
+// const fetchInfo = () => {
+//   // const api = "https://intense-retreat-81423.herokuapp.com";
+//   return (
+//     axios
+//       // .get(`${api}/dashboard/account`)
+//       .get(`/dashboard/account`)
+//       .then(({ data }) => {
+//         return data;
+//       })
+//       .catch((err) => {
+//         console.log(`%c ${err}`, "color: red");
+//       })
+//   );
+// };
 
 function AccountSite() {
   const [account, setAccount] = useState({});
   useEffect(() => {
-    fetchInfo()
+    fetchUser()
       .then((info) => {
         setAccount(info);
       })
@@ -591,7 +595,7 @@ function AdminArticle() {
             <div className="hover:ring hover:ring-[#6366f1] hover:rounded-full hover:ring-opacity-60 cursor-pointer">
               <img
                 className="rounded-full"
-                src={Avatar}
+                src={localStorage.getItem("img_path")}
                 alt="Avatar"
                 width={40}
                 height={40}

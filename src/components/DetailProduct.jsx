@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { fetchDetailProducts, postProduct } from "../API/clientAPI";
+
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
 
-const axios = require("axios").default;
 const reviews = { href: "/#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
@@ -62,30 +63,6 @@ const product = {
   ],
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
-};
-
-const fetchDetailProducts = (_id) => {
-  const api = "https://be-shoes-web.herokuapp.com";
-  return axios
-    .get(`${api}/categories/${_id}`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
-};
-
-const PostProduct = (detailProducts) => {
-  const api = "https://be-shoes-web.herokuapp.com";
-  try {
-    let localCart = JSON.parse(localStorage.getItem("cart"));
-    localCart.unshift(detailProducts);
-    localStorage.setItem("cart", JSON.stringify(localCart));
-    axios.post(`${api}/categories/${detailProducts._id}`);
-  } catch (err) {
-    console.log(`%c ${err}`, "color: red");
-  }
 };
 
 function DetailProduct(props) {
@@ -338,7 +315,7 @@ function DetailProduct(props) {
 
             <button
               className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => PostProduct(detailProducts)}
+              onClick={() => postProduct(detailProducts)}
             >
               Add to bag
             </button>

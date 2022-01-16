@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
+import { Spin } from "react-cssfx-loading";
+
 import * as Yup from "yup";
 
 import { ModalMessage } from "../../components/Modal";
@@ -23,30 +25,45 @@ function Login() {
   // Lưu state thay đổi để aos animation được render lại
   const [pageId, setPageId] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [authen, setAuthen] = useState(false);
-
-  const api = "https://be-shoes-web.herokuapp.com";
-
+  const [exist_Account, setExist_Account] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  // const api = "https://be-shoes-web.herokuapp.com";
   // Sau khi state thay đổi thì did mound sẽ re-render lại component
   useEffect(() => {
     setPageId(Math.random());
   }, []);
 
+  const handleHistory = (is_Admin) => {
+    if (!is_Admin) {
+      history.push("/");
+    } else {
+      history.push("/dashboard");
+    }
+  };
+
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
+      setLoading(true);
       axios
-        .post(`${api}/login`, {
+        // .post(`${api}/login`, {
+        .post(`/login`, {
           email: values.email,
           password: values.password,
         })
         .then((res) => {
-          if (res.data.authen) {
-            localStorage.setItem("token", res.data.token);
-            setAuthen(res.data.authen);
+          if (res.data.exist_Account) {
+            const { token, exist_Account, is_Admin } = res.data;
+            localStorage.setItem("token", token);
+            setExist_Account(exist_Account);
+            handleHistory(is_Admin);
           } else {
             setShowModal(!showModal);
           }
+        })
+        .then(() => {
+          setLoading(false);
         })
         .catch((err) => {
           throw new Error(err);
@@ -150,14 +167,23 @@ function Login() {
                     </div>
                   </div>
                   <div className="flex justify-between items-center pt-3">
-                    <button
-                      type="submit"
-                      className="py-1 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
-                    >
-                      <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-                        Sign In
-                      </p>
-                    </button>
+                    {loading ? (
+                      <button className="inline-flex items-center justify-center py-1 px-4 sm:py-3 sm:px-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
+                        <Spin color="#5048e5" width="20px" height="20px" />
+                        <span className="text-center font-Inter font-semibold text-[#5048e5] ml-3">
+                          Processing...
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="py-1 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
+                      >
+                        <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
+                          Sign in
+                        </p>
+                      </button>
+                    )}
 
                     <Link to="/register">
                       <button className="py-1 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
@@ -173,9 +199,7 @@ function Login() {
           </div>
         </div>
       </div>
-      {authen ? (
-        <Redirect to="/" />
-      ) : (
+      {exist_Account || (
         <ModalMessage
           showModal={showModal}
           setShowModal={setShowModal}

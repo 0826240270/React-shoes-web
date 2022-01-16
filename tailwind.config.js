@@ -1,7 +1,7 @@
 module.exports = {
     mode: 'jit',
-    purge: ['../FE/public/**/*.html',
-    '../FE/src/**/*.{js,jsx,ts,tsx,vue}'],    
+    purge: ['../React-shoes-web/public/**/*.html',
+    '../React-shoes-web/src/**/*.{js,jsx,ts,tsx,vue}'],    
     darkMode: false,
     theme: {
       fontFamily: {

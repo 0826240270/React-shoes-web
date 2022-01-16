@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { fetchInfo } from "../../API/users";
+import { fetchCart } from "../../API/clientAPI";
 import { Nav } from "../../pages/client/Home";
 
 const UsersContext = React.createContext();
@@ -9,7 +9,7 @@ function NavPage() {
   const [info, setInfo] = useState([]);
 
   useEffect(() => {
-    fetchInfo()
+    fetchCart()
       .then((data) => {
         setInfo([data]);
       })

@@ -5,15 +5,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 
-const axios = require("axios").default;
-
-const removeItem = (index, items, removeItems) => {
-  const api = "https://be-shoes-web.herokuapp.com";
-  items.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(items));
-  removeItems(JSON.parse(localStorage.getItem("cart")));
-  axios.post(`${api}/categories/${items._id}?_method=PUT`, items);
-};
+import { removeItem } from "../API/clientAPI";
 
 function Cart({ open, setOpen }) {
   const [items, removeItems] = useState(

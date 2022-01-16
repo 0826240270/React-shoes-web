@@ -6,10 +6,12 @@ import { Footer, About } from "./Home";
 import { ShoesComponent } from "../../components/home/Shoes";
 import { DropDown } from "../../components/home/DropDown";
 import { NavPage } from "../../components/Context/NavPage";
+import { fetchProducts } from "../../API/clientAPI";
 
 // Idea: Transition rendering list sản phẩm theo tên mỗi lần click
 import { Transition } from "@headlessui/react";
 import { useTimeoutFn } from "react-use";
+import { Hypnosis } from "react-cssfx-loading";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import { BsGridFill, BsClockHistory } from "react-icons/bs";
@@ -63,7 +65,12 @@ export const HeaderCategories = (props) => {
   );
 };
 
-const Pagination = ({ products, postsPerPage, setCurrentPage }) => {
+export const Pagination = ({
+  products,
+  postsPerPage,
+  setCurrentPage,
+  path,
+}) => {
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(products.length / postsPerPage); i++) {
     pageNumber.push(i);
@@ -92,10 +99,9 @@ const Pagination = ({ products, postsPerPage, setCurrentPage }) => {
             </a>
             {pageNumber &&
               pageNumber.map((page) => (
-                <div className="px-2">
+                <div className="px-2" key={page}>
                   <Link
-                    to="/categories"
-                    key={page}
+                    to={`/${path}`}
                     aria-current="page"
                     className="z-10 hover:ring-2 hover:ring-indigo-500 text-indigo-600 relative inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold"
                     onClick={() => setCurrentPage(page)}
@@ -417,28 +423,19 @@ const CollectRequire = () => {
   );
 };
 
-const fetchProducts = () => {
-  const api = "https://be-shoes-web.herokuapp.com";
-  return axios
-    .get(`${api}/categories`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(`%c  ${err}`, "color: red");
-    });
-};
-
 function Main() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProducts().then((items) => {
       setProducts(items || []);
+      setLoading(false);
     });
   }, []);
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
@@ -448,7 +445,9 @@ function Main() {
       <div className="flex flex-col flex-wrap sm:flex-row sm:justify-between items-center mt-10 border border-gray-200">
         <div className="w-full sm:w-max px-5 pt-5 sm:pt-0">
           <p className="text-sm font-semibold">All items</p>
-          <p className="text-sm text-gray_7a82a6">Total Listing Found: 15</p>
+          <p className="text-sm text-gray_7a82a6">
+            Total Listing Found: {products.length}
+          </p>
         </div>
         <div className="inline-flex justify-start items-center w-full sm:w-max mt-2 pb-4 sm:mt-0 sm:p-4 gap-3 text-gray_7a82a6">
           <a href="/#" className="ml-5 py-2 px-2 bg-pink_f5548e">
@@ -470,22 +469,29 @@ function Main() {
         </div>
 
         <div className="flex flex-wrap max-w-max gap-y-8 order-2 md:order-1 pt-10 sm:pt-0">
-          {currentPosts.map((items, index) => (
-            <ShoesComponent
-              key={index}
-              _id={items._id}
-              name={items.name}
-              url={items.path}
-              quantity={items.quantity}
-              price={items.price}
-              status={items.status}
-            />
-          ))}
+          {loading ? (
+            <div className="grid place-items-center w-full">
+              <Hypnosis duration="4s" width="70px" height="70px" />
+            </div>
+          ) : (
+            currentPosts.map((items, index) => (
+              <ShoesComponent
+                key={index}
+                _id={items._id}
+                name={items.name}
+                url={items.path}
+                quantity={items.quantity}
+                price={items.price}
+                status={items.status}
+              />
+            ))
+          )}
           <div className="grid place-items-center w-full">
             <Pagination
               products={products}
               postsPerPage={postsPerPage}
               setCurrentPage={setCurrentPage}
+              path={"categories"}
             />
           </div>
         </div>

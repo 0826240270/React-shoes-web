@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-
-import { ModalMessage } from "../../components/Modal";
 import { Link } from "react-router-dom";
+import { Spin } from "react-cssfx-loading";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
+// Firestore upload image
+import { storage } from "../../firebase/initializeApp";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import { ModalMessage } from "../../components/Modal";
 
 const axios = require("axios").default;
 
@@ -40,16 +45,30 @@ let validationSchema = Yup.object().shape({
   address: Yup.string().required("Please enter your address *"),
 });
 
+function local_Avatar(name) {
+  getDownloadURL(ref(storage, name))
+    .then((url) => {
+      console.log(url);
+      // `url` is the download URL in firebase storage'
+      localStorage.setItem("img_path", url);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 // Form component
 function FormRegister() {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const cancelButtonRef = useRef(null);
   // Formik
   const formik = useFormik({
     initialValues,
 
     // POST HTTP lên cho server;
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setLoading(true);
       const formData = new FormData();
       const api = "https://be-shoes-web.herokuapp.com";
       try {
@@ -61,10 +80,20 @@ function FormRegister() {
         formData.append("passwo_", values.passwo_);
         formData.append("avatar", "");
         formData.append("address", values.address);
-        axios.post(`${api}/register`, formData).then((res) => {
-          if (res.data.success) setShowModal(res.data.success);
-          else window.alert("This email maybe exists already");
-        });
+
+        const { data } = await axios.post(`${api}/register`, formData);
+
+        if (data.success) {
+          // Upload avatar to firebase storage
+          const storageRef = ref(storage, `${values.avatar.name}`);
+          await uploadBytes(storageRef, values.avatar).then(() => {
+            console.log("Upload image success !");
+          });
+          setShowModal(data.success);
+        } else window.alert("This email maybe exists already");
+
+        local_Avatar(values.avatar.name);
+        setLoading(false);
       } catch (err) {
         throw new Error(err);
       }
@@ -290,14 +319,24 @@ function FormRegister() {
                   </div>
                 </div>
                 <div className="flex justify-between items-center pt-3">
-                  <button
-                    type="submit"
-                    className="py-2 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
-                  >
-                    <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-                      Register
-                    </p>
-                  </button>
+                  {loading ? (
+                    <button className="inline-flex items-center justify-center py-1 px-4 sm:py-3 sm:px-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
+                      <Spin color="#5048e5" width="20px" height="20px" />
+                      <span className="text-center font-Inter font-semibold text-[#5048e5] ml-3">
+                        Processing...
+                      </span>
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="py-2 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
+                    >
+                      <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
+                        Register
+                      </p>
+                    </button>
+                  )}
+
                   <Link to="/login">
                     <button className="py-2 px-4 sm:py-3 sm:px-5 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
                       <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">

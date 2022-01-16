@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const axios = require("axios").default;
-/* This example requires Tailwind CSS v2.0+ */
-
-const fetchCustomers = () => {
-  const api = "https://be-shoes-web.herokuapp.com";
-  return axios
-    .get(`${api}/dashboard/customers`)
-    .then(({ data }) => {
-      return data.customersList;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
-};
+import { fetchCustomers } from "../../API/adminAPI";
 
 function Table({ name }) {
   const [listAccount, setListAccount] = useState([]);
