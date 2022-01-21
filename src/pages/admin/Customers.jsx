@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { fetchCustomers } from "../../API/adminAPI";
 
-function Table({ name }) {
+function Table({ name, id }) {
   const [listAccount, setListAccount] = useState([]);
   useEffect(() => {
     fetchCustomers()
@@ -50,7 +51,15 @@ function Table({ name }) {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody
+                className="bg-white divide-y divide-gray-200"
+                key={id}
+                data-aos="fade-left"
+                data-aos-offset="400"
+                data-aos-easing="ease-in-sine"
+                data-aos-duration="1200"
+                data-aos-once="true"
+              >
                 {listAccount
                   .filter((item) =>
                     item
@@ -66,7 +75,7 @@ function Table({ name }) {
                           <div className="flex-shrink-0 h-10 w-10">
                             <img
                               className="h-10 w-10 rounded-full"
-                              src={info.avatar}
+                              src={`${localStorage.getItem("img_path")}`}
                               alt=""
                             />
                           </div>
@@ -95,7 +104,7 @@ function Table({ name }) {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap font-semibold text-sm text-gray_7a82a6">
-                        Admin
+                        {info.is_Admin ? "Admin" : "Customer"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <a
@@ -116,14 +125,16 @@ function Table({ name }) {
   );
 }
 
-function UpSearch({ headTitle, upTitle, placeSearch, setSearch }) {
+function UpSearch({ headTitle, upTitle, placeSearch, setSearch, path }) {
   return (
     <>
       <div className="flex justify-between items-center">
         <p className="font-Inter font-bold text-3xl">{headTitle}</p>
-        <button className="font-Inter text-white font-bold px-4 py-2 bg-[#5048e5] rounded-lg text-sm">
-          {upTitle}
-        </button>
+        <Link to={`${path}`}>
+          <button className="font-Inter text-white font-bold px-4 py-2 bg-[#5048e5] rounded-lg text-sm">
+            {upTitle}
+          </button>
+        </Link>
       </div>
       <div className="py-8">
         <input
@@ -141,6 +152,10 @@ function UpSearch({ headTitle, upTitle, placeSearch, setSearch }) {
 
 function CustomersSite() {
   let [search, setSearch] = useState("");
+  let [id, setId] = useState(0);
+  useEffect(() => {
+    setId(Math.random());
+  }, []);
   return (
     <div className="pt-10 px-8 mx-auto w-full">
       <UpSearch
@@ -148,8 +163,9 @@ function CustomersSite() {
         headTitle={"Customers"}
         placeSearch={"Search customer"}
         setSearch={setSearch}
+        path="/register"
       />
-      <Table name={search} />
+      <Table name={search} id={id} />
     </div>
   );
 }

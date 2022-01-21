@@ -1,5 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { UserCircleIcon } from "@heroicons/react/outline";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -128,25 +130,27 @@ function Cart({ open, setOpen }) {
                     <p className="mt-0.5 text-sm text-gray-500">
                       Shipping and taxes calculated at checkout.
                     </p>
-                    <div className="mt-6">
+                    <Link className="mt-6" to="/checkout">
                       <a
                         href="/#"
                         className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                       >
                         Checkout
                       </a>
-                    </div>
+                    </Link>
                     <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
                       <p>
                         or{" "}
-                        <button
-                          type="button"
-                          className="text-indigo-600 font-medium hover:text-indigo-500"
-                          onClick={() => setOpen(!open)}
-                        >
-                          Continue Shopping
-                          <span aria-hidden="true"> &rarr;</span>
-                        </button>
+                        <Link to="/categories">
+                          <button
+                            type="button"
+                            className="text-indigo-600 font-medium hover:text-indigo-500"
+                            onClick={() => setOpen(!open)}
+                          >
+                            Continue Shopping
+                            <span aria-hidden="true"> &rarr;</span>
+                          </button>
+                        </Link>
                       </p>
                     </div>
                   </div>

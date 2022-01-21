@@ -147,6 +147,7 @@ function ProductsSite() {
         upTitle={"Add Product"}
         placeSearch={"Search product"}
         setSearch={setSearch}
+        path="#/"
       />
       <ListProducts name={search} />
     </div>

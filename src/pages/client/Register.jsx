@@ -48,7 +48,6 @@ let validationSchema = Yup.object().shape({
 function local_Avatar(name) {
   getDownloadURL(ref(storage, name))
     .then((url) => {
-      console.log(url);
       // `url` is the download URL in firebase storage'
       localStorage.setItem("img_path", url);
     })

@@ -20,15 +20,12 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 // Site
 import { ProductsSite } from "./Products";
 import { CustomersSite } from "./Customers";
-import { fetchUser } from "../../API/adminAPI";
-
-// Image
-import Avatar from "../../img/avatar.jpg";
+import { AccountSite } from "./Account";
 
 const axios = require("axios").default;
 
 // Menu công cụ bên trái của Admin
-function AdminSidebar() {
+function AdminSidebar({ id }) {
   return (
     <div className="hidden lg:block bg-[#111827] overflow-y-scroll">
       <div className="flex flex-col">
@@ -41,7 +38,15 @@ function AdminSidebar() {
           />
         </div>
         <div className="px-4">
-          <div className="flex justify-between items-center w-60 px-6 py-3 rounded-lg bg-[#1a212f]">
+          <div
+            className="flex justify-between items-center w-60 px-6 py-3 rounded-lg bg-[#1a212f]"
+            key={id}
+            data-aos="flip-up"
+            data-aos-offset="600"
+            data-aos-easing="ease-out-cubic"
+            data-aos-duration="1400"
+            data-aos-once="true"
+          >
             <span className="block text-white">
               <p className="text-lg font-Inter">Phát Đỗ</p>
               <span className="text-sm text-gray_7a82a6 font-normal font-Inter">
@@ -59,7 +64,15 @@ function AdminSidebar() {
           <div className="px-4 pt-3">
             <ul className="grid grid-flow-row list-none gap-y-2">
               <Link to="/dashboard">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="1400"
+                  data-aos-once="true"
+                >
                   <GoGraph size={20} />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Dashboard
@@ -67,7 +80,15 @@ function AdminSidebar() {
                 </li>
               </Link>
               <Link to="/dashboard/customers">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="1600"
+                  data-aos-once="true"
+                >
                   <FiUsers size={20} />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Customer
@@ -75,7 +96,15 @@ function AdminSidebar() {
                 </li>
               </Link>
               <Link to="/dashboard/products">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="1800"
+                  data-aos-once="true"
+                >
                   <GoRepoClone size={20} />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Products
@@ -83,7 +112,15 @@ function AdminSidebar() {
                 </li>
               </Link>
               <Link to="/dashboard/account">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="2000"
+                  data-aos-once="true"
+                >
                   <MdOutlineManageAccounts size={24} className="-ml-1" />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Account
@@ -91,7 +128,15 @@ function AdminSidebar() {
                 </li>
               </Link>
               <Link to="/register">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="2200"
+                  data-aos-once="true"
+                >
                   <FiUserPlus size={21} className="-ml-1" />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Register
@@ -99,7 +144,15 @@ function AdminSidebar() {
                 </li>
               </Link>
               <Link to="/login">
-                <li className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300">
+                <li
+                  className="text-[#c8cdd3] inline-flex items-center w-full px-6 py-3 hover:bg-[#242a38] rounded-md cursor-pointer hover:text-[#10b981] transition-colors duration-300"
+                  key={id}
+                  data-aos="fade-right"
+                  data-aos-offset="400"
+                  data-aos-easing="ease-in-sine"
+                  data-aos-duration="2400"
+                  data-aos-once="true"
+                >
                   <GiExitDoor size={23} className="-ml-2" />
                   <span className="text-sm font-semibold pl-3 font-Inter">
                     Log out
@@ -370,189 +423,6 @@ function DashboardSite() {
 //   );
 // };
 
-function AccountSite() {
-  const [account, setAccount] = useState({});
-  useEffect(() => {
-    fetchUser()
-      .then((info) => {
-        setAccount(info);
-      })
-      .catch((err) => {
-        console.log(`%c ${err}`, "color: red");
-      });
-  }, []);
-
-  return (
-    <div className="max-w-6xl pt-16 mx-auto">
-      <p className="font-bold ml-5 text-3xl lg:ml-0">Account</p>
-      <div className="flex flex-wrap flex-col md:flex-row pt-8">
-        {/* Left */}
-        <div className="w-full px-5 lg:px-0 md:w-[30%]">
-          <div className="flex flex-col justify-center items-center px-6 py-8 rounded-md shadow-all-rounded">
-            <img
-              className="rounded-full"
-              src={Avatar}
-              alt="Avatar"
-              width={100}
-              height={100}
-            />
-            <p className="font-Inter font-semibold text-xl py-2">Phát Đỗ</p>
-            <span className="font-Inter text-sm text-[#65748b] py-1">
-              Los Angeles USA
-            </span>
-            <span className="font-Inter text-sm text-[#65748b]">GTM-7</span>
-          </div>
-          <div className="pt-3">
-            <label htmlFor="file-upload">
-              <div className="px-1 py-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
-                <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-                  Upload picture
-                  <input
-                    id="file-upload"
-                    name="file-upload"
-                    type="file"
-                    className="sr-only"
-                  />
-                </p>
-              </div>
-            </label>
-          </div>
-        </div>
-        {/* Right */}
-        <div className="pt-16 w-full md:w-[70%] md:pt-0 md:pl-6">
-          <div className="sm:px-6 sm:pb-8">
-            <h3 className="ml-5 md:ml-0 text-lg font-medium leading-6 text-gray-900">
-              Personal Information
-            </h3>
-            <p className="mt-1 ml-5 md:ml-0 text-sm text-[#65748b]">
-              Use a permanent address where you can receive mail.
-            </p>
-          </div>
-
-          <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
-              <div className="shadow overflow-hidden sm:rounded-md">
-                <div className="px-4 py-5 bg-white sm:p-6">
-                  <div className="grid grid-cols-6 gap-6">
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="first-name"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        First name
-                      </label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        id="first-name"
-                        autoComplete="first-name"
-                        defaultValue={account.firstName}
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="last-name"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Last name
-                      </label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        id="last-name"
-                        autoComplete="family-name"
-                        defaultValue={account.lastName}
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="email-address"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Email address
-                      </label>
-                      <input
-                        type="text"
-                        name="email"
-                        id="email-address"
-                        autoComplete="email"
-                        defaultValue={account.email}
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-semibold text-indigo-500 text-opacity-90"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="text"
-                        name="phone"
-                        id="phone"
-                        autoComplete="phone"
-                        defaultValue={account.phone}
-                        className="mt-1 transition-colors duration-500  focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-4">
-                      <label
-                        htmlFor="passwo_"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        name="passwo_"
-                        id="passwo_"
-                        autoComplete="password"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-
-                    <div className="col-span-6">
-                      <label
-                        htmlFor="address"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Address
-                      </label>
-                      <input
-                        type="text"
-                        name="address"
-                        id="address"
-                        autoComplete="address"
-                        defaultValue={account.address}
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-                  </div>
-                  <div className=" py-5 text-right">
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // AdminArticle
 function AdminArticle() {
   return (
@@ -616,11 +486,17 @@ function AdminArticle() {
 }
 
 function Dashboard() {
+  let [id, setId] = useState(0);
   const tokenHeader = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
+
+  useEffect(() => {
+    setId(Math.random());
+  }, []);
+
   return tokenHeader ? (
     <div className="grid grid-flow-row sm:grid-flow-col auto-cols-fr sm:auto-cols-grid-admin h-screen">
-      <AdminSidebar />
+      <AdminSidebar id={id} />
       <AdminArticle />
     </div>
   ) : (
