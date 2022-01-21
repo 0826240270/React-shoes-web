@@ -17,7 +17,6 @@ function NavPage() {
         console.log(`%c ${err}`, "color: red");
       });
   }, []);
-
   return (
     <UsersContext.Provider value={info}>
       <Nav />

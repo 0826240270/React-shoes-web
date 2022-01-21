@@ -21,6 +21,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import { ProductsSite } from "./Products";
 import { CustomersSite } from "./Customers";
 import { AccountSite } from "./Account";
+import { fetchUser } from "../../API/adminAPI";
 
 const axios = require("axios").default;
 
@@ -424,7 +425,7 @@ function DashboardSite() {
 // };
 
 // AdminArticle
-function AdminArticle() {
+function AdminArticle({ account }) {
   return (
     <div className="col-start-1 col-end-3 lg:col-start-2 lg:col-end-3">
       <div className="px-5">
@@ -462,14 +463,8 @@ function AdminArticle() {
                 }}
               />
             </button>
-            <div className="hover:ring hover:ring-[#6366f1] hover:rounded-full hover:ring-opacity-60 cursor-pointer">
-              <img
-                className="rounded-full"
-                src={localStorage.getItem("img_path")}
-                alt="Avatar"
-                width={40}
-                height={40}
-              />
+            <div className="hover:ring hover:ring-[#6366f1] hover:rounded-full hover:ring-opacity-60 cursor-pointer w-10 h-10 flex justify-center">
+              <img className="rounded-full" src={account.avatar} alt="Avatar" />
             </div>
           </div>
         </nav>
@@ -487,17 +482,21 @@ function AdminArticle() {
 
 function Dashboard() {
   let [id, setId] = useState(0);
+  let [account, setAccount] = useState({});
   const tokenHeader = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
 
   useEffect(() => {
+    (async () => {
+      setAccount(await fetchUser());
+    })();
     setId(Math.random());
   }, []);
 
   return tokenHeader ? (
     <div className="grid grid-flow-row sm:grid-flow-col auto-cols-fr sm:auto-cols-grid-admin h-screen">
       <AdminSidebar id={id} />
-      <AdminArticle />
+      <AdminArticle account={account} />
     </div>
   ) : (
     <Redirect to="/login" />

@@ -342,8 +342,8 @@ function ContactForm({ id }) {
                   id="name"
                   autoComplete="given-name"
                   className="mt-1 transition-colors duration-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  value={info.firstName}
-                  disabled="true"
+                  value={info.firstName || ""}
+                  disabled
                 />
               </div>
               <div className="mb-5">
@@ -359,8 +359,8 @@ function ContactForm({ id }) {
                   id="email"
                   autoComplete="given-email"
                   className="mt-1 transition-colors duration-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  value={info.email}
-                  disabled="true"
+                  value={info.email || ""}
+                  disabled
                 />
               </div>
 
@@ -377,8 +377,8 @@ function ContactForm({ id }) {
                   id="phone"
                   autoComplete="given-phone"
                   className="mt-1 transition-colors duration-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  value={info.phone}
-                  disabled="true"
+                  value={info.phone || ""}
+                  disabled
                 />
               </div>
 
@@ -396,7 +396,7 @@ function ContactForm({ id }) {
                   form="contactForm"
                   className="mt-1 transition-colors duration-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   onChange={formik.handleChange}
-                  value={formik.values.message}
+                  value={formik.values.message || ""}
                   placeholder="Type here..."
                 ></textarea>
                 {formik.touched.message && formik.errors.message ? (

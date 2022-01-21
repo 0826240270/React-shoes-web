@@ -12,7 +12,6 @@ function AccountSite() {
         console.log(`%c ${err}`, "color: red");
       });
   }, []);
-
   return (
     <div className="max-w-6xl pt-16 mx-auto">
       <p className="font-bold ml-5 text-3xl lg:ml-0">Account</p>
@@ -20,13 +19,13 @@ function AccountSite() {
         {/* Left */}
         <div className="w-full px-5 lg:px-0 md:w-[30%]">
           <div className="flex flex-col justify-center items-center px-6 py-8 rounded-md shadow-all-rounded">
-            <img
-              className="rounded-full"
-              src={`${localStorage.getItem("img_path")}`}
-              alt="Avatar"
-              width={100}
-              height={100}
-            />
+            <div className="w-24 h-24">
+              <img
+                className="rounded-full w-full h-full"
+                src={account.avatar}
+                alt="Avatar"
+              />
+            </div>
             <p className="font-Inter font-semibold text-xl py-2">Phát Đỗ</p>
             <span className="font-Inter text-sm text-[#65748b] py-1">
               Los Angeles USA

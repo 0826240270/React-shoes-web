@@ -191,7 +191,7 @@ export function Nav() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={`${localStorage.getItem("img_path")}`}
+                    src={countCart.length && countCart[0].avatar}
                     alt="avatar"
                   />
                 </button>
@@ -227,7 +227,7 @@ export function Nav() {
                 <Link
                   className="block px-4 py-2 text-sm text-gray-700"
                   to="/login"
-                  onClick={() => localStorage.removeItem("token")}
+                  onClick={() => localStorage.clear()}
                 >
                   Sign out
                 </Link>

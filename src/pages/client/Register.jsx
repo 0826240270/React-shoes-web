@@ -45,17 +45,6 @@ let validationSchema = Yup.object().shape({
   address: Yup.string().required("Please enter your address *"),
 });
 
-function local_Avatar(name) {
-  getDownloadURL(ref(storage, name))
-    .then((url) => {
-      // `url` is the download URL in firebase storage'
-      localStorage.setItem("img_path", url);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
 // Form component
 function FormRegister() {
   const [showModal, setShowModal] = useState(false);
@@ -69,29 +58,31 @@ function FormRegister() {
     onSubmit: async (values) => {
       setLoading(true);
       const formData = new FormData();
-      const api = "https://be-shoes-web.herokuapp.com";
+      // const api = "https://be-shoes-web.herokuapp.com";
       try {
+        // Upload avatar to firebase storage
+        const storageRef = ref(storage, `${values.avatar.name}`);
+        await uploadBytes(storageRef, values.avatar).then(() => {
+          console.log("Upload image success !");
+        });
+
+        // GET url path image from firebase store
+        let url_path = await getDownloadURL(ref(storage, values.avatar.name));
+
         formData.append("avatar", values.avatar);
         formData.append("firstName", values.firstName);
         formData.append("lastName", values.lastName);
         formData.append("email", values.email);
         formData.append("phone", values.phone);
+        formData.append("avatar", url_path);
         formData.append("passwo_", values.passwo_);
-        formData.append("avatar", "");
         formData.append("address", values.address);
-
-        const { data } = await axios.post(`${api}/register`, formData);
-
+        // const { data } = await axios.post(`${api}/register`, formData);
+        const { data } = await axios.post(`/register`, formData);
         if (data.success) {
-          // Upload avatar to firebase storage
-          const storageRef = ref(storage, `${values.avatar.name}`);
-          await uploadBytes(storageRef, values.avatar).then(() => {
-            console.log("Upload image success !");
-          });
           setShowModal(data.success);
         } else window.alert("This email maybe exists already");
 
-        local_Avatar(values.avatar.name);
         setLoading(false);
       } catch (err) {
         throw new Error(err);
