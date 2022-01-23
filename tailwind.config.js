@@ -6,7 +6,8 @@ module.exports = {
     theme: {
       fontFamily: {
         Inter: ['Inter', "Inter","-apple-system,BlinkMacSystemFont","Segoe UI","Helvetica","Arial","sans-serif","Apple Color Emoji","Segoe UI Emoji"],
-        Public: ['Public Sans, sans-serif']
+        Public: ['Public Sans, sans-serif'],
+        roboto: ['Roboto, sans-serif']
       },
       zIndex : {
         '1': 1,
