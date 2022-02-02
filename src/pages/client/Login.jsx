@@ -73,7 +73,7 @@ function Login() {
   });
   return (
     <div className="relative w-full h-screen">
-      <div className="grid grid-flow-row xl:grid-flow-col xl:grid-cols-2 absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 md:w-max">
+      <div className="grid grid-flow-row xl:grid-flow-col xl:grid-cols-2 absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-max">
         {/* Left animation */}
         <div
           // Key ID page để re-render lại nếu có sự thay đổi

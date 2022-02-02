@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useFormik } from "formik";
 import { fetchCart } from "../../API/clientAPI";
 import * as Yup from "yup";
@@ -8,7 +8,7 @@ import { NavPage } from "../../components/Context/NavPage";
 import { HeaderCategories } from "./Categories";
 
 import { FaUserFriends, FaShieldAlt, FaStarHalfAlt } from "react-icons/fa";
-
+import { IoIosArrowRoundBack } from "react-icons/io";
 const axios = require("axios").default;
 
 const initialValues = {
@@ -196,23 +196,24 @@ const ShippingAddress = () => {
             value={info.address || ""}
           />
         </div>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
-        >
-          <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-            Send
-          </p>
-        </button>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
-        >
-          <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-            Send
-          </p>
-        </button>
       </form>
+      <div className="flex justify-between items-center pt-3">
+        <Link
+          to="/categories"
+          className="flex justify-center items-center max-w-max text-[#5048e5] cursor-pointer"
+        >
+          <IoIosArrowRoundBack />
+          <p className="text-xs ml-2 font-semibold">Return to shop</p>
+        </Link>
+        <button
+          type="submit"
+          className="w-full py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-full shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer max-w-max"
+        >
+          <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
+            Check out
+          </p>
+        </button>
+      </div>
     </div>
   );
 };
@@ -265,8 +266,8 @@ const Process = () => {
 const Info = () => {
   return (
     <>
-      <div className="w-full h-full px-0 md:px-44 pt-5 sm:pt-0">
-        <div className="flex flex-col items-center justify-center w-max p-16 bg-gray-700 rounded-md drop-shadow-xl">
+      <div className="w-full h-full px-0 lg:px-44 pt-16 lg:pt-0">
+        <div className="flex flex-col items-center justify-center lg:w-max p-5 md:p-10 lg:p-20 border-2 border-gray-700 border-opacity-80 rounded-md shadow-all-rounded">
           <video
             className="max-w-full md:max-w-max w-64 h-52"
             autoPlay="autoplay"
@@ -279,39 +280,39 @@ const Info = () => {
               src="https://cdnl.iconscout.com/lottie/premium/thumb/online-shopping-3572874-3017339.mp4"
             />
           </video>
-          <p className="font-semibold">Payment is here</p>
-          <div className="flex justify-around items-center mt-5 py-8 border-b border-t border-gray-600 w-full">
+          <p className="font-semibold font-roboto pt-5">Payment is here</p>
+          <div className="flex justify-around items-center mt-5 py-8 border-b border-t border-gray-700 border-opacity-60 w-full">
             <input
-              className="rounded-full px-10 py-1 mr-4 border-1 border-gray-400"
+              className="rounded-full py-1 mr-4 border-1 text-sm mt-1 transition-colors duration-500 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 focus:placeholder-transparent "
               type="text"
-              placeholder="Gift card or discount code"
+              placeholder="code"
             />
             <button
-              className="flex justify-center items-center bg-purpel_903af9 px-4 py-2 rounded-full bg-opacity-35 font-roboto"
+              className="flex justify-center items-center hover:bg-opacity-80 px-4 py-2 rounded-full bg-opacity-35 font-roboto border-2 hover:border-opacity-60 shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
               type="button"
             >
-              <span className="text-white text-xs font-roboto font-semibold tracking-wider">
+              <span className="text-gray-600 text-xs font-roboto font-semibold tracking-widest hover:text-[#5048e5]">
                 APPLY
               </span>
             </button>
           </div>
           <div className="flex flex-col w-full pt-5 pb-7 border-b border-gray-400">
-            <div className="flex justify-between items-center w-full">
-              <p>Discount</p>
+            <div className="flex justify-between items-center w-full text-xs lg:text-sm font-roboto text-gray-600 tracking-wide">
+              <p className="font-semibold">Discount</p>
               <p>$0.00</p>
             </div>
-            <div className="flex justify-between items-center w-full">
-              <p>Shipping Cost</p>
+            <div className="flex justify-between items-center w-full text-xs lg:text-sm text-gray-600 font-roboto pt-2 tracking-wide">
+              <p className="font-semibold">Shipping Cost</p>
               <p>Free</p>
             </div>
-            <div className="flex justify-between items-center w-full">
-              <p>Taxes (estimated)</p>
+            <div className="flex justify-between items-center w-full text-xs lg:text-sm text-gray-600 font-roboto pt-2 tracking-wide">
+              <p className="font-semibold">Taxes (estimated)</p>
               <p>$0</p>
             </div>
           </div>
-          <div className="flex justify-between items-center pt-9 w-full">
+          <div className="flex justify-between items-center pt-5 w-full font-roboto text-gray-600 tracking-wide font-semibold">
             <p>Total</p>
-            <p className="text-lg font-semibold">$0.00</p>
+            <p>$0.00</p>
           </div>
         </div>
       </div>
@@ -321,7 +322,7 @@ const Info = () => {
 
 const Main = () => {
   return (
-    <div className="container mx-auto px-10 pb-10 grid grid-cols-1 md:grid-cols-2 pt-20">
+    <div className="container mx-auto px-10 pb-10 grid grid-cols-1 lg:grid-cols-2 pt-20">
       <Process />
       <Info />
     </div>

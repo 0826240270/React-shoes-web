@@ -1,6 +1,8 @@
+import { Redirect } from "react-router-dom";
 import { About, Footer } from "./Home";
 import { NavPage } from "../../components/Context/NavPage";
-/* This example requires Tailwind CSS v2.0+ */
+const axios = require("axios").default;
+
 function ImageTitle() {
   return (
     <div className="relative bg-white overflow-hidden">
@@ -170,7 +172,10 @@ function ReviewProduct() {
 }
 
 export function Product() {
-  return (
+  const tokenHeader = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
+
+  return tokenHeader ? (
     <div className="bg-white">
       <NavPage />
       <ImageTitle />
@@ -179,5 +184,7 @@ export function Product() {
       <About />
       <Footer />
     </div>
+  ) : (
+    <Redirect to="/login" />
   );
 }

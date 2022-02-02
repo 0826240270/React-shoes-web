@@ -181,59 +181,62 @@ const AboutMe = (id) => {
                 </a>
               </span>
               <div className="inline-flex justify-around items-center">
-                <button className="p-2 rounded-md hover:ring-2 hover:ring-blue_1170cf ">
-                  <a
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href="https://www.facebook.com/tphat99/"
-                  >
-                    <FaFacebookF
-                      style={{
-                        color: "#1170cf",
-                      }}
-                    />
-                  </a>
-                </button>
-                <button className="p-2 rounded-md hover:ring-2 hover:ring-bg_272b41">
-                  <a
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href="https://github.com/0826240270"
-                  >
-                    <GoMarkGithub
-                      style={{
-                        color: "#272b41",
-                      }}
-                    />
-                  </a>
-                </button>
-                <button className="p-2 rounded-md hover:ring-2 hover:ring-green_32CC0B">
-                  <a rel="noopener noreferrer" target="_blank" href="/#">
-                    <FcGoogle />
-                  </a>
-                </button>
-                <button className="p-2 rounded-md hover:ring-2 hover:ring-blue_1170cf">
-                  <a rel="noopener noreferrer" target="_blank" href="/#">
-                    <FaLinkedinIn
-                      style={{
-                        color: "#1170cf",
-                      }}
-                    />
-                  </a>
-                </button>
-                <button className="p-2 rounded-md hover:ring-2 hover:ring-pink_f5548e">
-                  <a
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    href="https://www.instagram.com/_ttphat_139/?fbclid=IwAR33plcVbhmCPk7os6gpEuTBIJOZJIML9qG-M5aApuIXyx3HkCRmOlhgehQ"
-                  >
-                    <BsInstagram
-                      style={{
-                        color: "#f5548e",
-                      }}
-                    />
-                  </a>
-                </button>
+                <a
+                  className="p-2 rounded-md hover:ring-2 hover:ring-blue_1170cf "
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://www.facebook.com/tphat99/"
+                >
+                  <FaFacebookF
+                    style={{
+                      color: "#1170cf",
+                    }}
+                  />
+                </a>
+                <a
+                  className="p-2 rounded-md hover:ring-2 hover:ring-bg_272b41"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://github.com/0826240270"
+                >
+                  <GoMarkGithub
+                    style={{
+                      color: "#272b41",
+                    }}
+                  />
+                </a>
+                <a
+                  className="p-2 rounded-md hover:ring-2 hover:ring-green_32CC0B"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="/#"
+                >
+                  <FcGoogle />
+                </a>
+                <a
+                  className="p-2 rounded-md hover:ring-2 hover:ring-blue_1170cf"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://www.linkedin.com/in/t%E1%BA%A5n-ph%C3%A1t-%C4%91%E1%BB%97-3a35891aa/"
+                >
+                  <FaLinkedinIn
+                    style={{
+                      color: "#1170cf",
+                    }}
+                  />
+                </a>
+                <a
+                  className="p-2 rounded-md hover:ring-2 hover:ring-pink_f5548e"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="https://www.instagram.com/_ttphat_139/?fbclid=IwAR33plcVbhmCPk7os6gpEuTBIJOZJIML9qG-M5aApuIXyx3HkCRmOlhgehQ"
+                >
+                  <BsInstagram
+                    style={{
+                      color: "#f5548e",
+                    }}
+                  />
+                </a>
               </div>
             </div>
           </div>
