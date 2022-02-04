@@ -11,6 +11,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ModalMessage } from "../../components/Modal";
 
 const axios = require("axios").default;
+const host = "https://be-shoes-web.herokuapp.com";
 
 // Init values data formik
 const initialValues = {
@@ -58,7 +59,6 @@ function FormRegister() {
     onSubmit: async (values) => {
       setLoading(true);
       const formData = new FormData();
-      // const api = "https://be-shoes-web.herokuapp.com";
       try {
         // Upload avatar to firebase storage
         const storageRef = ref(storage, `${values.avatar.name}`);
@@ -77,8 +77,8 @@ function FormRegister() {
         formData.append("avatar", url_path);
         formData.append("passwo_", values.passwo_);
         formData.append("address", values.address);
-        // const { data } = await axios.post(`${api}/register`, formData);
-        const { data } = await axios.post(`/register`, formData);
+        const { data } = await axios.post(`${host}/register`, formData);
+        // const { data } = await axios.post(`/register`, formData);
         if (data.success) {
           setShowModal(data.success);
         } else window.alert("This email maybe exists already");

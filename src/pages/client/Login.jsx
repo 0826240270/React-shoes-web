@@ -5,6 +5,8 @@ import { Spin } from "react-cssfx-loading";
 
 import * as Yup from "yup";
 
+import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { ModalMessage } from "../../components/Modal";
 
 const axios = require("axios").default;
@@ -28,7 +30,7 @@ function Login() {
   const [exist_Account, setExist_Account] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  // const api = "https://be-shoes-web.herokuapp.com";
+  const host = "https://be-shoes-web.herokuapp.com";
   // Sau khi state thay đổi thì did mound sẽ re-render lại component
   useEffect(() => {
     setPageId(Math.random());
@@ -47,8 +49,8 @@ function Login() {
     onSubmit: (values) => {
       setLoading(true);
       axios
-        // .post(`${api}/login`, {
-        .post(`/login`, {
+        .post(`${host}/login`, {
+          // .post(`/login`, {
           email: values.email,
           password: values.password,
         })
@@ -71,6 +73,18 @@ function Login() {
     },
     validationSchema,
   });
+
+  const auth_Google = () => {
+    axios
+      .get(`${host}/auth/google`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
   return (
     <div className="relative w-full h-screen">
       <div className="grid grid-flow-row xl:grid-flow-col xl:grid-cols-2 absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-max">
@@ -192,6 +206,30 @@ function Login() {
                         </p>
                       </button>
                     </Link>
+                  </div>
+                  <div
+                    before=" "
+                    after=" "
+                    className="relative text-center z-2 before:absolute before:block before:bg-blue-500 before:w-2/5 before:h-1 before:top-1/2 before:left-0 before:border-2 after:block after:absolute after:bg-pink-300 after:w-2/5 after:h-1 after:top-1/2 after:right-0 after:border-2 pt-3 w-full"
+                  >
+                    <span className="text-sm font-semibold font-roboto text-gray_7a82a6">
+                      Or
+                    </span>
+                  </div>
+                  <div className="flex justify-center items-center mt-3 w-full px-5 py-2 bg-blue-600 rounded-md cursor-pointer shadow-all-rounded hover:bg-opacity-70">
+                    <FaFacebook size={28} color="white" className="pr-2" />
+                    <p className="text-sm font-semibold text-white font-roboto">
+                      Continue with Facebook
+                    </p>
+                  </div>
+                  <div
+                    className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
+                    onClick={auth_Google}
+                  >
+                    <FcGoogle size={28} color="white" className="pr-2" />
+                    <p className="text-sm font-semibold font-roboto">
+                      Continue with Google
+                    </p>
                   </div>
                 </div>
               </div>
