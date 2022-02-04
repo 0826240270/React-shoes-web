@@ -1,12 +1,11 @@
 const axios = require("axios").default;
-
-// const host = "https://be-shoes-web.herokuapp.com";
+const host = "https://be-shoes-web.herokuapp.com";
 
 const fetchCart = () => {
   return (
     axios
-      // .get(`${api}/home`)
-      .get(`/home`)
+      .get(`${host}/home`)
+      // .get(`/home`)
       .then((res) => {
         localStorage.setItem("cart", JSON.stringify(res.data.cart));
         return res.data.infor;
@@ -20,8 +19,8 @@ const fetchCart = () => {
 const fetchProducts = () => {
   return (
     axios
-      // .get(`${api}/categories`)
-      .get(`/categories`)
+      .get(`${host}/categories`)
+      // .get(`/categories`)
       .then(({ data }) => {
         return data;
       })
@@ -34,8 +33,8 @@ const fetchProducts = () => {
 const fetchDetailProducts = (_id) => {
   return (
     axios
-      // .get(`${api}/categories/${_id}`)
-      .get(`/categories/${_id}`)
+      .get(`${host}/categories/${_id}`)
+      // .get(`/categories/${_id}`)
       .then((res) => {
         return res.data;
       })
@@ -50,8 +49,8 @@ const postProduct = (detailProducts) => {
     let localCart = JSON.parse(localStorage.getItem("cart"));
     localCart.unshift(detailProducts);
     localStorage.setItem("cart", JSON.stringify(localCart));
-    // axios.post(`${api}/categories/${detailProducts._id}`);
-    axios.post(`/categories/${detailProducts._id}`);
+    axios.post(`${host}/categories/${detailProducts._id}`);
+    // axios.post(`/categories/${detailProducts._id}`);
   } catch (err) {
     console.log(`%c ${err}`, "color: red");
   }
@@ -61,8 +60,8 @@ const removeItem = (index, items, removeItems) => {
   items.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(items));
   removeItems(JSON.parse(localStorage.getItem("cart")));
-  // axios.post(`${api}/categories/${items._id}?_method=PUT`, items);
-  axios.post(`/categories/${items._id}?_method=PUT`, items);
+  axios.post(`${host}/categories/${items._id}?_method=PUT`, items);
+  // axios.post(`/categories/${items._id}?_method=PUT`, items);
 };
 
 export {
