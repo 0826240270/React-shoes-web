@@ -1,11 +1,11 @@
 const axios = require("axios").default;
+const host = "https://be-shoes-web.herokuapp.com";
 
 const fetchUser = () => {
-  // const api = "https://intense-retreat-81423.herokuapp.com";
   return (
     axios
-      // .get(`${api}/dashboard/account`)
-      .get(`/dashboard/account`)
+      .get(`${host}/dashboard/account`)
+      // .get(`/dashboard/account`)
       .then(({ data }) => {
         return data;
       })
@@ -16,11 +16,10 @@ const fetchUser = () => {
 };
 
 const fetchProductsAdmin = () => {
-  // const api = "https://be-shoes-web.herokuapp.com";
   return (
     axios
-      // .get(`${api}/dashboard/products`)
-      .get(`/dashboard/products`)
+      .get(`${host}/dashboard/products`)
+      // .get(`/dashboard/products`)
       .then(({ data }) => {
         return data;
       })
@@ -33,8 +32,8 @@ const fetchProductsAdmin = () => {
 const fetchCustomers = () => {
   return (
     axios
-      // .get(`${api}/dashboard/customers`)
-      .get(`/dashboard/customers`)
+      .get(`${host}/dashboard/customers`)
+      // .get(`/dashboard/customers`)
       .then(({ data }) => {
         return data.customersList;
       })
