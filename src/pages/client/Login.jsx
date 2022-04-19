@@ -74,6 +74,11 @@ function Login() {
     validationSchema,
   });
 
+  const googleOaths = async () => {
+    let { data } = await axios.get("/auth/google");
+    console.log(data);
+  };
+
   return (
     <div className="relative w-full h-screen">
       <div className="grid grid-flow-row xl:grid-flow-col xl:grid-cols-2 absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-max">
@@ -205,25 +210,28 @@ function Login() {
                       Or
                     </span>
                   </div>
-                  <div className="flex justify-center items-center mt-3 w-full px-5 py-2 bg-blue-600 rounded-md cursor-pointer shadow-all-rounded hover:bg-opacity-70">
-                    <FaFacebook size={28} color="white" className="pr-2" />
-                    <p className="text-sm font-semibold text-white font-roboto">
-                      Continue with Facebook
-                    </p>
-                  </div>
-                  <a
-                    // href="https://be-shoes-web.herokuapp.com/auth/google"
-                    href="http://localhost:3001/auth/google"
-                    className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
-                  >
-                    <FcGoogle size={28} color="white" className="pr-2" />
-                    <p className="text-sm font-semibold font-roboto">
-                      Continue with Google
-                    </p>
-                  </a>
                 </div>
               </div>
             </form>
+            <div>
+              <div className="flex justify-center items-center mt-3 w-full px-5 py-2 bg-blue-600 rounded-md cursor-pointer shadow-all-rounded hover:bg-opacity-70">
+                <FaFacebook size={28} color="white" className="pr-2" />
+                <p className="text-sm font-semibold text-white font-roboto">
+                  Continue with Facebook
+                </p>
+              </div>
+              <a
+                // href="https://be-shoes-web.herokuapp.com/auth/google"
+                href="http://localhost:3001/auth/google"
+                className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
+                onClick={googleOaths}
+              >
+                <FcGoogle size={28} color="white" className="pr-2" />
+                <p className="text-sm font-semibold font-roboto">
+                  Continue with Google
+                </p>
+              </a>
+            </div>
           </div>
         </div>
       </div>
