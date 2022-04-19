@@ -5,6 +5,7 @@ import { fetchDetailProducts, postProduct } from "../API/clientAPI";
 
 import { StarIcon } from "@heroicons/react/solid";
 import { RadioGroup } from "@headlessui/react";
+import { ModalMessage } from "../components/Modal";
 
 const reviews = { href: "/#", average: 4, totalCount: 117 };
 
@@ -69,6 +70,7 @@ function DetailProduct(props) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
   const [detailProducts, setDetailProducts] = useState({});
+  const [soldout, setSoldOut] = useState(false);
   const {
     match: { params },
   } = props;
@@ -315,7 +317,7 @@ function DetailProduct(props) {
 
             <button
               className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => postProduct(detailProducts)}
+              onClick={() => postProduct(detailProducts, setSoldOut)}
             >
               Add to bag
             </button>
@@ -365,6 +367,13 @@ function DetailProduct(props) {
             </div>
           </div>
         </div>
+        {soldout || (
+          <ModalMessage
+            showModal={soldout}
+            setShowModal={setSoldOut}
+            caption={"This product is out of stock !"}
+          />
+        )}
       </div>
     </>
   );

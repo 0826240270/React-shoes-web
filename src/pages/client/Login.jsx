@@ -212,7 +212,8 @@ function Login() {
                     </p>
                   </div>
                   <a
-                    href="https://be-shoes-web.herokuapp.com/auth/google"
+                    // href="https://be-shoes-web.herokuapp.com/auth/google"
+                    href="http://localhost:3001/auth/google"
                     className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
                   >
                     <FcGoogle size={28} color="white" className="pr-2" />
