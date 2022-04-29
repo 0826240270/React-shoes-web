@@ -9,6 +9,9 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { ModalMessage } from "../../components/Modal";
 
+import "./home.css";
+
+import { signInWithPopup } from "../../firebase/initializeApp";
 const axios = require("axios").default;
 // const host = "https://be-shoes-web.herokuapp.com";
 const host = "http://localhost:3001";
@@ -37,6 +40,7 @@ function Login() {
     setPageId(Math.random());
   }, []);
 
+  //
   const handleHistory = (is_Admin) => {
     if (!is_Admin) {
       history.push("/");
@@ -45,6 +49,11 @@ function Login() {
     }
   };
 
+  const clickGG = () => {
+    signInWithPopup();
+  };
+
+  // Login Form
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
@@ -211,15 +220,15 @@ function Login() {
                       Continue with Facebook
                     </p>
                   </div>
-                  <a
-                    href={`${host}/auth/google`}
+                  <div
                     className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
+                    onClick={clickGG}
                   >
                     <FcGoogle size={28} color="white" className="pr-2" />
                     <p className="text-sm font-semibold font-roboto">
                       Continue with Google
                     </p>
-                  </a>
+                  </div>
                 </div>
               </div>
             </form>
