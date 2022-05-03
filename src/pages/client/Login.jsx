@@ -2,19 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { Spin } from "react-cssfx-loading";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+} from "firebase/auth";
 
 import * as Yup from "yup";
 
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { ModalMessage } from "../../components/Modal";
-
+import { firebaseApp } from "../../firebase/initializeApp";
 import "./home.css";
 
-import { signInWithPopup } from "../../firebase/initializeApp";
 const axios = require("axios").default;
 // const host = "https://be-shoes-web.herokuapp.com";
 const host = "http://localhost:3001";
+const auth = getAuth(firebaseApp);
+const provider_Google = new GoogleAuthProvider();
+const provider_Facebook = new FacebookAuthProvider();
 
 const initialValues = {
   email: "",
@@ -48,11 +56,6 @@ function Login() {
       history.push("/dashboard");
     }
   };
-
-  const clickGG = () => {
-    signInWithPopup();
-  };
-
   // Login Form
   const formik = useFormik({
     initialValues,
@@ -82,6 +85,66 @@ function Login() {
     },
     validationSchema,
   });
+
+  function facebookAuthen() {
+    signInWithPopup(auth, provider_Facebook)
+      .then(async (result) => {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        FacebookAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const { email, displayName, photoURL } = result.user;
+        let { data } = await axios.post("/facebook/oath-client", {
+          email,
+          displayName,
+          photoURL,
+        });
+        if (data) {
+          localStorage.setItem("token", data.token);
+          setExist_Account(data.exist_Account);
+          handleHistory(data.is_Admin);
+        } else {
+          setShowModal(!showModal);
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const { code, message, email } = error;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+        console.log(code, message, email, credential);
+        // ...
+      });
+  }
+
+  function googleAuthen() {
+    signInWithPopup(auth, provider_Google)
+      .then(async (result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        GoogleAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const { email, displayName, photoURL } = result.user;
+        let { data } = await axios.post("/google/oath-client", {
+          email,
+          displayName,
+          photoURL,
+        });
+        if (data) {
+          localStorage.setItem("token", data.token);
+          setExist_Account(data.exist_Account);
+          handleHistory(data.is_Admin);
+        } else {
+          setShowModal(!showModal);
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const { code, message, email } = error;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(code, message, email, credential);
+        // ...
+      });
+  }
 
   return (
     <div className="relative w-full h-screen">
@@ -214,7 +277,10 @@ function Login() {
                       Or
                     </span>
                   </div>
-                  <div className="flex justify-center items-center mt-3 w-full px-5 py-2 bg-blue-600 rounded-md cursor-pointer shadow-all-rounded hover:bg-opacity-70">
+                  <div
+                    className="flex justify-center items-center mt-3 w-full px-5 py-2 bg-blue-600 rounded-md cursor-pointer shadow-all-rounded hover:bg-opacity-70"
+                    onClick={facebookAuthen}
+                  >
                     <FaFacebook size={28} color="white" className="pr-2" />
                     <p className="text-sm font-semibold text-white font-roboto">
                       Continue with Facebook
@@ -222,7 +288,7 @@ function Login() {
                   </div>
                   <div
                     className="flex justify-center items-center mt-3 w-full px-5 py-2 rounded-md cursor-pointer shadow-all-rounded hover:bg-gray-300"
-                    onClick={clickGG}
+                    onClick={googleAuthen}
                   >
                     <FcGoogle size={28} color="white" className="pr-2" />
                     <p className="text-sm font-semibold font-roboto">

@@ -10,7 +10,6 @@ import { Contact } from "./pages/client/Contact";
 import { Dashboard } from "./pages/admin/Dashboard";
 import { Register } from "./pages/client/Register";
 import { Checkout } from "./pages/client/Checkout";
-import { Verifygoogle } from "./pages/client/Verifygoogle";
 
 import "./App.css";
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Route path="/contact" component={Contact} />
           <Route path="/register" component={Register} />
           <Route path="/payment" component={Checkout} />
-          <Route path="/auth/google/:slug" component={Verifygoogle} />
         </Switch>
       </Router>
     </div>

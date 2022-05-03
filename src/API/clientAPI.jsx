@@ -39,10 +39,12 @@ const fetchDetailProducts = (_id) => {
 const postProduct = async (detailProducts, setSoldOut) => {
   try {
     let localCart = JSON.parse(localStorage.getItem("cart"));
-    localCart.unshift(detailProducts);
     localStorage.setItem("cart", JSON.stringify(localCart));
     let { data } = await axios.post(`${host}/categories/${detailProducts._id}`);
-    data.status === 400 ? setSoldOut(true) : setSoldOut(false);
+    if (data.status !== 400) {
+      setSoldOut(false);
+      localCart.unshift(detailProducts);
+    } else setSoldOut(true);
   } catch (err) {
     console.log(`%c ${err}`, "color: red");
   }

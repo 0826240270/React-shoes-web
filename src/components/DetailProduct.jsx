@@ -367,7 +367,7 @@ function DetailProduct(props) {
             </div>
           </div>
         </div>
-        {soldout || (
+        {soldout && (
           <ModalMessage
             showModal={soldout}
             setShowModal={setSoldOut}

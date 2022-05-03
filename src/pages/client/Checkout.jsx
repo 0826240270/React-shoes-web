@@ -66,7 +66,13 @@ const ShippingAddress = () => {
           />
           <div className="pl-2">
             <p className="text-xs font-semibold">Tấn Phát Đỗ</p>
-            <p className="text-xs text-orange_fa8b0c font-semibold">Log out</p>
+            <Link
+              to="/login"
+              className="text-xs text-orange_fa8b0c font-semibold w-max"
+              onClick={() => localStorage.clear()}
+            >
+              Log out
+            </Link>
           </div>
         </div>
         <div className="flex items-center justify-between pt-2 ml-1">
@@ -264,6 +270,11 @@ const Process = () => {
 };
 
 const Info = () => {
+  let list_cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const total_price = list_cart.reduce(
+    (previousValue, currentValue) => previousValue + currentValue.price,
+    0
+  );
   return (
     <>
       <div className="w-full h-full px-0 lg:px-44 pt-16 lg:pt-0">
@@ -312,7 +323,7 @@ const Info = () => {
           </div>
           <div className="flex justify-between items-center pt-5 w-full font-roboto text-gray-600 tracking-wide font-semibold">
             <p>Total</p>
-            <p>$0.00</p>
+            <p>${total_price}</p>
           </div>
         </div>
       </div>
