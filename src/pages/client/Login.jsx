@@ -8,7 +8,6 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
 } from "firebase/auth";
-
 import * as Yup from "yup";
 
 import { FaFacebook } from "react-icons/fa";
@@ -93,7 +92,8 @@ function Login() {
         FacebookAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const { email, displayName, photoURL } = result.user;
-        let { data } = await axios.post("/facebook/oath-client", {
+        console.log(email, displayName, photoURL);
+        let { data } = await axios.post(`${host}/facebook/oath-client`, {
           email,
           displayName,
           photoURL,
@@ -123,7 +123,7 @@ function Login() {
         GoogleAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const { email, displayName, photoURL } = result.user;
-        let { data } = await axios.post("/google/oath-client", {
+        let { data } = await axios.post(`${host}/google/oath-client`, {
           email,
           displayName,
           photoURL,
@@ -218,7 +218,6 @@ function Login() {
                         </p>
                       ) : null}
                     </div>
-
                     <div className="col-span-6">
                       <label
                         htmlFor="password"
