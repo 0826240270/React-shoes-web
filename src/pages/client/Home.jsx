@@ -2,8 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import { Cart } from "../../components/Modal";
-import { DropDown } from "../../components/home/DropDown";
-import { CategoriesLogo } from "../../components/home/CategoriesLogo";
+
 import { Project } from "../../components/home/Project";
 import { Item } from "../../components/home/Shoes";
 import { NavPage, UsersContext } from "../../components/Context/NavPage";
@@ -29,6 +28,8 @@ import { TiSocialInstagram, TiSocialGooglePlus } from "react-icons/ti";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import "./home.css";
+import banner from "../../img/banner.png";
+import shoes from "../../img/running-shoes.png";
 
 import sbShape from "../../img/sb-shape.svg";
 
@@ -288,31 +289,79 @@ export function Nav() {
 
 function Header() {
   return (
-    <div className="flex justify-center items-center md:h-screen bg-gray-700">
-      <div className="w-2/4 h-auto py-10 md:py-0">
-        <p
-          after="All the top locations – from restaurants and clubs, to galleries, famous places and more."
-          className="after:block after:content-[attr(after)] after:text-sm after:my-4 text-xl md:text-4xl text-white text-center font-bold"
-        >
-          WELCOME
-        </p>
-        <div className="grid grid-flow-row p-4 md:grid-flow-col md:grid-cols-4 gap-6 md:p-6 md:mt-4 rounded-md bg-white">
-          <DropDown title="Name" />
-          <DropDown title="Category" />
-          <DropDown title="Location" />
-          <button
-            type="button"
-            before="Search"
-            className="before:content-[attr(before)] before:text-white flex justify-center items-center w-auto bg-gradient-to-r from-purpel_903af9 to-pink_f5548e h-auto border rounded-md py-1 md:py-0"
-          ></button>
-        </div>
+    <>
+      {/* Khung */}
+      <div
+        className="w-full h-auto"
+        style={{
+          backgroundImage: `url(${banner})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="w-full mx-auto">
+          <div className="px-5">
+            {/* 3 items headers */}
+            <div className="flex flex-col md:flex-row justify-between items-center py-7 gap-y-5 lg:gap-y-0">
+              {/* Flex items 1 */}
+              <div className="hidden lg:block flex-col items-center py-5 pl-10">
+                <p className="w-max mb-36 mx-5 text-gray_7a82a6">Men shoes</p>
+                <div className="grid place-content-center w-full">
+                  <div className="w-12 h-12 rounded-full border-2 border-red-500">
+                    <span className="grid place-items-center h-full w-full text-center text-white">
+                      0/2
+                    </span>
+                  </div>
+                </div>
+                <p className="w-max mt-36 mb-4 mx-5 text-gray_7a82a6">
+                  Men shoes
+                </p>
+              </div>
 
-        {/* Categories Button Logo */}
-        <div className="flex flex-wrap justify-center gap-5 items-center mt-12 leading-10">
-          <CategoriesLogo />
+              {/* Flex items 2 */}
+              <div className="flex flex-col flex-grow lg:flex-grow-0 max-w-md mr-0 lg:mr-28">
+                <p className="text-2xl md:text-4xl text-red-400 transition-all duration-1000 tracking-wider md:ease-in-out">
+                  New Running Shoes
+                </p>
+                <p className="font-extrabold text-white pt-2 transition-all duration-1000 text-4xl md:text-5xl ease-in md:ease-in-out">
+                  Men's Like Plex
+                </p>
+                <p className="hidden lg:block text-white text-sm py-5 font-Inter">
+                  New Running ShoesMen's Like Plexipsum dolor sit amet,
+                  consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua.
+                </p>
+                <div className="hidden md:block">
+                  <div className="mt-5 lg:mt-0 flex flex-row items-center w-full">
+                    <a
+                      href="/#"
+                      className="w-max py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
+                    >
+                      <p className="w-max text-center font-Inter font-semibold text-white">
+                        Buy now
+                      </p>
+                    </a>
+                    <a
+                      href="/#"
+                      className="w-max py-2 px-4 ml-6 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
+                    >
+                      <p className="w-max text-center font-Inter font-semibold text-white">
+                        See more
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Flex items 3 */}
+              <div className="sm:w-1/3 flex-grow lg:flex-grow-0">
+                <img src={shoes} alt="Shoes logo" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -12,7 +12,6 @@ import { Register } from "./pages/client/Register";
 import { Checkout } from "./pages/client/Checkout";
 
 import "./App.css";
-import mainPage from "./pages/client/mainPage";
 function App() {
   return (
     <div>
@@ -26,7 +25,6 @@ function App() {
           <Route path="/contact" component={Contact} />
           <Route path="/register" component={Register} />
           <Route path="/payment" component={Checkout} />
-          <Route path="/main" component={mainPage} />
         </Switch>
       </Router>
     </div>
