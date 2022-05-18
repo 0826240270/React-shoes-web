@@ -1,8 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import { Autoplay, Pagination } from "swiper";
+import "swiper/swiper-bundle.min.css";
 
+import { fetchProducts } from "../../API/clientAPI";
 import { Cart } from "../../components/Modal";
-
 import { Project } from "../../components/home/Project";
 import { Item } from "../../components/home/Shoes";
 import { NavPage, UsersContext } from "../../components/Context/NavPage";
@@ -28,9 +31,16 @@ import { TiSocialInstagram, TiSocialGooglePlus } from "react-icons/ti";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import "./home.css";
-import banner from "../../img/banner.png";
-import shoes from "../../img/running-shoes.png";
 
+// Image
+import banner_1 from "../../img/banner.png";
+import banner_2 from "../../img/banner2.svg";
+import banner_3 from "../../img/banner3.svg";
+import banner_4 from "../../img/banner4.svg";
+import shoes_logo_1 from "../../img/shoes_logo_1.png";
+import shoes_logo_2 from "../../img/shoes_logo_2.svg";
+import shoes_logo_3 from "../../img/shoes_logo_3.svg";
+import shoes_logo_4 from "../../img/shoes_logo_4.svg";
 import sbShape from "../../img/sb-shape.svg";
 
 const axios = require("axios").default;
@@ -288,79 +298,152 @@ export function Nav() {
 }
 
 function Header() {
+  const SPECIAL_LIST = [
+    {
+      info_1: "Men shoes",
+      total: "0/2",
+      info_2: "Men shoes",
+      first_title: "New Running Shoes",
+      second_title: "Men's Like Plex",
+      description:
+        "New Running ShoesMen's Like Plexipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      banner: banner_1,
+      shoes_logo: shoes_logo_1,
+      text_color: "text-gray_7a82a6",
+    },
+    {
+      info_1: "Men shoes",
+      total: "0/2",
+      info_2: "Men shoes",
+      first_title: "New Running Shoes",
+      second_title: "Men's Like Plex",
+      description:
+        "New Running ShoesMen's Like Plexipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      banner: banner_2,
+      shoes_logo: shoes_logo_2,
+      text_color: "text-white",
+    },
+    {
+      info_1: "Men shoes",
+      total: "0/2",
+      info_2: "Men shoes",
+      first_title: "New Running Shoes",
+      second_title: "Men's Like Plex",
+      description:
+        "New Running ShoesMen's Like Plexipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      banner: banner_3,
+      shoes_logo: shoes_logo_3,
+      text_color: "text-white",
+    },
+    {
+      info_1: "Men shoes",
+      total: "0/2",
+      info_2: "Men shoes",
+      first_title: "New Running Shoes",
+      second_title: "Men's Like Plex",
+      description:
+        "New Running ShoesMen's Like Plexipsum dolor sit amet,consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      banner: banner_4,
+      shoes_logo: shoes_logo_4,
+      text_color: "text-white",
+    },
+  ];
   return (
     <>
       {/* Khung */}
-      <div
-        className="w-full h-auto"
-        style={{
-          backgroundImage: `url(${banner})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
+      {/* 3 items headers */}
+      <Swiper
+        spaceBetween={60}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
         }}
+        rewind={true}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
+        modules={[Autoplay, Pagination]}
+        className="mySwiper"
       >
-        <div className="w-full mx-auto">
-          <div className="px-5">
-            {/* 3 items headers */}
-            <div className="flex flex-col md:flex-row justify-between items-center py-7 gap-y-5 lg:gap-y-0">
-              {/* Flex items 1 */}
-              <div className="hidden lg:block flex-col items-center py-5 pl-10">
-                <p className="w-max mb-36 mx-5 text-gray_7a82a6">Men shoes</p>
-                <div className="grid place-content-center w-full">
-                  <div className="w-12 h-12 rounded-full border-2 border-red-500">
-                    <span className="grid place-items-center h-full w-full text-center text-white">
-                      0/2
-                    </span>
+        {SPECIAL_LIST &&
+          SPECIAL_LIST.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div
+                className="w-full h-auto"
+                style={{
+                  backgroundImage: `url(${item.banner})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <div className="w-full mx-auto">
+                  <div className="px-5">
+                    <div className="flex flex-col md:flex-row justify-between items-center py-7 gap-y-5 lg:gap-y-0">
+                      {/* Flex items 1 */}
+                      <div className="hidden lg:block flex-col items-center py-5 pl-10">
+                        <p className={`w-max mb-36 mx-5 ${item.text_color}`}>
+                          {item.info_1}
+                        </p>
+                        <div className="grid place-content-center w-full">
+                          <div className="w-12 h-12 rounded-full border-2 border-red-500">
+                            <span className="grid place-items-center h-full w-full text-center text-white">
+                              {item.total}
+                            </span>
+                          </div>
+                        </div>
+                        <p
+                          className={`w-max mt-36 mb-4 mx-5 ${item.text_color}`}
+                        >
+                          {item.info_2}
+                        </p>
+                      </div>
+
+                      {/* Flex items 2 */}
+                      <div className="flex flex-col flex-grow lg:flex-grow-0 max-w-md mr-0 lg:mr-28">
+                        <p className="text-2xl md:text-4xl text-red-400 transition-all duration-1000 tracking-wider md:ease-in-out">
+                          {item.first_title}
+                        </p>
+                        <p className="font-extrabold text-white pt-2 transition-all duration-1000 text-4xl md:text-5xl ease-in md:ease-in-out">
+                          {item.second_title}
+                        </p>
+                        <p className="hidden lg:block text-white text-sm py-5 font-Inter">
+                          {item.description}
+                        </p>
+                        <div className="hidden md:block">
+                          <div className="mt-5 lg:mt-0 flex flex-row items-center w-full">
+                            <a
+                              href="/#"
+                              className="w-max py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
+                            >
+                              <p className="w-max text-center font-Inter font-semibold text-white">
+                                Buy now
+                              </p>
+                            </a>
+                            <a
+                              href="/#"
+                              className="w-max py-2 px-4 ml-6 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
+                            >
+                              <p className="w-max text-center font-Inter font-semibold text-white">
+                                See more
+                              </p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Flex items 3 */}
+                      <div className="sm:w-1/3 flex-grow lg:flex-grow-0 transition-transform -translate-y-10 animate-bounce-slow">
+                        <img src={item.shoes_logo} alt="Shoes logo" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <p className="w-max mt-36 mb-4 mx-5 text-gray_7a82a6">
-                  Men shoes
-                </p>
               </div>
-
-              {/* Flex items 2 */}
-              <div className="flex flex-col flex-grow lg:flex-grow-0 max-w-md mr-0 lg:mr-28">
-                <p className="text-2xl md:text-4xl text-red-400 transition-all duration-1000 tracking-wider md:ease-in-out">
-                  New Running Shoes
-                </p>
-                <p className="font-extrabold text-white pt-2 transition-all duration-1000 text-4xl md:text-5xl ease-in md:ease-in-out">
-                  Men's Like Plex
-                </p>
-                <p className="hidden lg:block text-white text-sm py-5 font-Inter">
-                  New Running ShoesMen's Like Plexipsum dolor sit amet,
-                  consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua.
-                </p>
-                <div className="hidden md:block">
-                  <div className="mt-5 lg:mt-0 flex flex-row items-center w-full">
-                    <a
-                      href="/#"
-                      className="w-max py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
-                    >
-                      <p className="w-max text-center font-Inter font-semibold text-white">
-                        Buy now
-                      </p>
-                    </a>
-                    <a
-                      href="/#"
-                      className="w-max py-2 px-4 ml-6 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-red-500 cursor-pointer"
-                    >
-                      <p className="w-max text-center font-Inter font-semibold text-white">
-                        See more
-                      </p>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Flex items 3 */}
-              <div className="sm:w-1/3 flex-grow lg:flex-grow-0">
-                <img src={shoes} alt="Shoes logo" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </SwiperSlide>
+          ))}
+      </Swiper>
     </>
   );
 }
@@ -370,10 +453,10 @@ function Categories() {
     <div className="flex flex-col justify-center items-center pt-20">
       <div className="text-black text-center">
         <p
-          after="Discover best things to do restaurants, shopping, hotels, cafes and places around the world by categories"
+          after="Discover best things by your own style"
           className="after:content-[attr(after)] after:block after:text-sm after:mt-3 after:text-gray_7a82a6 text-xl md:text-4xl leading-loose"
         >
-          What kind of activity do you want to try?
+          Trending Brands
         </p>
       </div>
 
@@ -415,16 +498,26 @@ function Categories() {
 }
 
 function Products() {
+  let [products, setProducts] = useState([]);
+  console.log("🚀 ~ file: Home.jsx ~ line 419 ~ Products ~ products", products);
+  useEffect(() => {
+    (async () => {
+      let result = await fetchProducts();
+      setProducts(result.splice(0, 6));
+    })();
+  }, []);
   return (
-    <div className="flex flex-col justify-center items-center mt-32 border-t-2 border-pink_f5548e">
+    <div className="flex flex-col justify-center items-center pb-32 border-b-2 border-pink_f5548e">
       <div className="pt-20 text-center leading-10 pb-5">
-        <p className="text-4xl font-semibold">Best Listings Around The World</p>
+        <p className="text-xl sm:text-4xl font-semibold">
+          Best Listings Around The World
+        </p>
         <span className="text-base text-gray-400">
           Explore the popular listings around the world
         </span>
       </div>
-      <div className="container md:w-auto grid grid-cols px-5 sm:px-0 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <Item />
+      <div className="container md:w-auto grid grid-cols px-5 sm:px-0 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-14">
+        <Item products={products} />
       </div>
       <a
         className="p-3 mt-10 text-center text-sm text-yellow-50 font-semibold bg-gradient-to-r from-pink_f5548e to-orange_fa8b0c hover:from-orange_fa8b0c hover:to-pink_f5548e rounded-lg"
