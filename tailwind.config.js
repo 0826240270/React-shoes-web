@@ -45,6 +45,15 @@ module.exports = {
         }, 
         gridAutoColumns: {
           'grid-admin': '280px auto',
+        },
+        keyframes: {
+          bounce: {
+            '0%, 100%': { transform: 'translateY(-5%)' },
+            '50%': { transform: 'none' },
+          }
+        },
+        animation: {
+          'bounce-slow': 'bounce 2s infinite',
         }
       },
       boxShadow: {
