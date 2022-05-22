@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import { Autoplay, Pagination } from "swiper";
 import "swiper/swiper-bundle.min.css";
 
-import { fetchProducts } from "../../API/clientAPI";
+import { fetchProducts, getBrands } from "../../API/clientAPI";
 import { Cart } from "../../components/Modal";
 import { Project } from "../../components/home/Project";
 import { Item } from "../../components/home/Shoes";
@@ -42,6 +42,9 @@ import shoes_logo_2 from "../../img/shoes_logo_2.svg";
 import shoes_logo_3 from "../../img/shoes_logo_3.svg";
 import shoes_logo_4 from "../../img/shoes_logo_4.svg";
 import sbShape from "../../img/sb-shape.svg";
+import refundIcon from "../../img/refund.png";
+import paymentIcon from "../../img/payment.gif";
+import deliveryIcon from "../../img/delivery.gif";
 
 const axios = require("axios").default;
 
@@ -51,7 +54,7 @@ export function Nav() {
   const [showCart, setShowCart] = useState(false);
   const countCart = useContext(UsersContext);
   return (
-    <nav className="sm:sticky z-1 top-0 bg-gray-800">
+    <nav className="sm:sticky z-2 top-0 bg-gray-800">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -365,7 +368,7 @@ function Header() {
           dynamicBullets: true,
         }}
         modules={[Autoplay, Pagination]}
-        className="mySwiper"
+        className="mySwiper z-0"
       >
         {SPECIAL_LIST &&
           SPECIAL_LIST.map((item, index) => (
@@ -499,7 +502,6 @@ function Categories() {
 
 function Products() {
   let [products, setProducts] = useState([]);
-  console.log("🚀 ~ file: Home.jsx ~ line 419 ~ Products ~ products", products);
   useEffect(() => {
     (async () => {
       let result = await fetchProducts();
@@ -519,12 +521,12 @@ function Products() {
       <div className="container md:w-auto grid grid-cols px-5 sm:px-0 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-14">
         <Item products={products} />
       </div>
-      <a
+      <Link
+        to="/categories"
         className="p-3 mt-10 text-center text-sm text-yellow-50 font-semibold bg-gradient-to-r from-pink_f5548e to-orange_fa8b0c hover:from-orange_fa8b0c hover:to-pink_f5548e rounded-lg"
-        href="/#"
       >
         Explore All 200+
-      </a>
+      </Link>
     </div>
   );
 }
@@ -572,8 +574,9 @@ function Section3() {
         >
           <div className="grid grid-flow-row h-full">
             <div className="flex justify-center items-center w-4/5">
-              <div className="flex justify-center items-center border w-16 h-12 rounded-full bg-purple-200">
-                <svg
+              <div className="flex justify-center items-center w-16 h-12">
+                <img src={deliveryIcon} alt="Delivery icon" />
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-8 w-8 font-thin text-purple-600"
                   fill="none"
@@ -586,19 +589,24 @@ function Section3() {
                     strokeWidth={1}
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
-                </svg>
+                </svg> */}
               </div>
               <div className="block leading-8 ml-5">
-                <p className="text-lg">Claim Listing</p>
+                <p className="text-lg">Free Shipping</p>
                 <span className="overflow-ellipsis text-gray-400">
-                  Excepteur sint occaecat cupidatat non proident sunt in culpa
-                  officia deserunt mollit.
+                  Time won't wait anyone. Fast deleviry any time you need and
+                  any where you go,
                 </span>
               </div>
             </div>
             <div className="flex justify-center items-center w-4/5">
               <div className="flex justify-center items-center border w-16 h-12 rounded-full bg-green-200">
-                <svg
+                <img
+                  src={paymentIcon}
+                  alt="Payment icon"
+                  style={{ width: "48px", height: "48px" }}
+                />
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h8 w-8 text-green-500"
                   fill="none"
@@ -611,29 +619,30 @@ function Section3() {
                     strokeWidth={1}
                     d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
                   />
-                </svg>
+                </svg> */}
               </div>
               <div className="block leading-8 ml-5">
-                <p className="text-lg">Paid Listing</p>
+                <p className="text-lg">Cach on delivery</p>
                 <span className="overflow-ellipsis text-gray-400">
-                  Excepteur sint occaecat cupidatat non proident sunt in culpa
-                  officia deserunt mollit.
+                  The Internet Tend To Repeat, payment by wallet online, fast
+                  and convinient
                 </span>
               </div>
             </div>
             <div className="flex justify-center items-center w-4/5">
-              <div className="flex justify-center items-center border w-16 h-12 rounded-full bg-pink-200">
-                <svg
+              <div className="flex justify-center items-center w-16 h-12 ">
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h6 w-6 text-pink-500"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
                   <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                </svg>
+                </svg> */}
+                <img src={refundIcon} alt="Refund icon" />
               </div>
               <div className="block leading-8 ml-5">
-                <p className="text-lg">Promote your Business</p>
+                <p className="text-lg">45 days return</p>
                 <span className="overflow-ellipsis text-gray-400">
                   Excepteur sint occaecat cupidatat non proident sunt in culpa
                   officia deserunt mollit.
@@ -782,58 +791,48 @@ function Section5() {
 }
 
 function Section6() {
-  const sponsoring = [
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1635340245676-b097d28a2257?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8Q0R3dXdYSkFiRXd8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      alt: "Traveloka",
-      width: "145px",
-      height: "43px",
-    },
-  ];
+  let [brands, setBrands] = useState([]);
+  useEffect(() => {
+    (async () => {
+      setBrands(await getBrands());
+    })();
+  }, []);
   return (
-    <div className="pt-10 pb-10 border-t-2">
-      <div className="grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 justify-items-center items-center gap-y-10">
-        {sponsoring.map((items, index) => (
-          <img
-            className="rounded-full"
-            key={index}
-            src={items.src}
-            alt={items.alt}
-            width={items.width}
-            height={items.height}
-          />
+    <div className="ml-10">
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={10}
+        breakpoints={{
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 50,
+          },
+        }}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        modules={[Pagination, Autoplay]}
+        className="mySwiper pb-10 z-0"
+      >
+        {brands.map((items, index) => (
+          <SwiperSlide key={index}>
+            <img
+              className="w-32 h-20 md:w-48 md:h-36"
+              src={items.logo}
+              alt="Shoes band"
+            />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 }
@@ -1069,15 +1068,14 @@ export function Footer() {
 function Home() {
   const tokenHeader = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = "Bearer " + tokenHeader;
-
   return tokenHeader ? (
     <>
       <NavPage />
       <Header />
 
-      <section>
+      {/* <section>
         <Categories />
-      </section>
+      </section> */}
       <section>
         <Products />
       </section>
