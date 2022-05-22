@@ -58,10 +58,22 @@ const removeItem = (index, items, removeItems) => {
   axios.post(`${host}/categories/${itemRemove._id}?_method=PUT`, items);
 };
 
+const getBrands = () => {
+  return axios
+    .get(`${host}/brands`)
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => {
+      console.log(`%c ${err}`, "color: red");
+    });
+};
+
 export {
   fetchCart,
   fetchProducts,
   fetchDetailProducts,
   postProduct,
   removeItem,
+  getBrands,
 };
