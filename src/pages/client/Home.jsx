@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react/swiper-react";
 import { Autoplay, Pagination } from "swiper";
 import "swiper/swiper-bundle.min.css";
 
@@ -45,6 +45,8 @@ import sbShape from "../../img/sb-shape.svg";
 import refundIcon from "../../img/refund.png";
 import paymentIcon from "../../img/payment.gif";
 import deliveryIcon from "../../img/delivery.gif";
+import prev from "../../img/prev.png";
+import next from "../../img/next.png";
 
 const axios = require("axios").default;
 
@@ -518,7 +520,7 @@ function Products() {
           Explore the popular listings around the world
         </span>
       </div>
-      <div className="container md:w-auto grid grid-cols px-5 sm:px-0 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-14">
+      <div className="container md:w-auto grid grid-cols px-8 sm:px-0 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-14">
         <Item products={products} />
       </div>
       <Link
@@ -532,6 +534,27 @@ function Products() {
 }
 
 function Section3() {
+  const services = [
+    {
+      title: "Free Shipping",
+      logo: deliveryIcon,
+      description:
+        "Time won't wait anyone. Fast deleviry any time you need and any where you go",
+    },
+    {
+      title: "Cach on delivery",
+      logo: paymentIcon,
+      description:
+        "The Internet Tend To Repeat, payment by wallet online, fast and convinient",
+    },
+    {
+      title: "45 days return",
+      logo: refundIcon,
+      description:
+        "Excepteur sint occaecat cupidatat non proident sunt in culpa officia deserunt mollit.",
+    },
+  ];
+
   return (
     <div className="flex-columns justify-center items-center pt-16 pb-16 border-b-2">
       {/* Heading title */}
@@ -570,85 +593,26 @@ function Section3() {
           data-aos-offset="300"
           data-aos-easing="ease-in-sine"
           data-aos-duration="1000"
-          className="col-span-1 mt-20 ml-14 sm:justify-self-center xl:justify-self-start"
+          className="col-span-1 mt-8 sm:mt-20 ml-14 sm:justify-self-center xl:justify-self-start"
         >
           <div className="grid grid-flow-row h-full">
-            <div className="flex justify-center items-center w-4/5">
-              <div className="flex justify-center items-center w-16 h-12">
-                <img src={deliveryIcon} alt="Delivery icon" />
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 font-thin text-purple-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            {services &&
+              services.map((item, index) => (
+                <div
+                  className="flex justify-center items-center w-4/5 pb-5"
+                  key={index}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg> */}
-              </div>
-              <div className="block leading-8 ml-5">
-                <p className="text-lg">Free Shipping</p>
-                <span className="overflow-ellipsis text-gray-400">
-                  Time won't wait anyone. Fast deleviry any time you need and
-                  any where you go,
-                </span>
-              </div>
-            </div>
-            <div className="flex justify-center items-center w-4/5">
-              <div className="flex justify-center items-center border w-16 h-12 rounded-full bg-green-200">
-                <img
-                  src={paymentIcon}
-                  alt="Payment icon"
-                  style={{ width: "48px", height: "48px" }}
-                />
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h8 w-8 text-green-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1}
-                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg> */}
-              </div>
-              <div className="block leading-8 ml-5">
-                <p className="text-lg">Cach on delivery</p>
-                <span className="overflow-ellipsis text-gray-400">
-                  The Internet Tend To Repeat, payment by wallet online, fast
-                  and convinient
-                </span>
-              </div>
-            </div>
-            <div className="flex justify-center items-center w-4/5">
-              <div className="flex justify-center items-center w-16 h-12 ">
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h6 w-6 text-pink-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                </svg> */}
-                <img src={refundIcon} alt="Refund icon" />
-              </div>
-              <div className="block leading-8 ml-5">
-                <p className="text-lg">45 days return</p>
-                <span className="overflow-ellipsis text-gray-400">
-                  Excepteur sint occaecat cupidatat non proident sunt in culpa
-                  officia deserunt mollit.
-                </span>
-              </div>
-            </div>
+                  <div className="flex justify-center items-baseline sm:items-center w-16 h-full sm:h-12 mr-8 sm:mr-0">
+                    <img src={item.logo} alt="Icon" />
+                  </div>
+                  <div className="block leading-8 ml-5">
+                    <p className="text-lg">{item.title}</p>
+                    <span className="overflow-ellipsis text-gray-400">
+                      {item.description}
+                    </span>
+                  </div>
+                </div>
+              ))}
             <div className="flex justify-start items-center text-white text-sm pt-6">
               <a
                 className="p-2 md:p-3 lg:p-3 bg-green-500 rounded-md font-semibold hover:bg-green-600"
@@ -671,68 +635,159 @@ function Section3() {
 }
 
 function Section4(props) {
+  let [products, setProducts] = useState([]);
+  const swiper = useSwiper();
+  useEffect(() => {
+    (async () => {
+      let products = await fetchProducts();
+      setProducts(products.slice(0, 8));
+    })();
+  }, []);
   return (
-    <div className="flex flex-col justify-center items-center pt-10 pb-10 max-w-max mx-auto">
-      <div className="text-center leading-10">
-        <p className="text-4xl">Destination we love</p>
-        <p className="text-gray-400">
-          Explore best listings around the world by city
-        </p>
+    <Swiper
+      pagination={{
+        dynamicBullets: true,
+      }}
+      modules={[Pagination]}
+      className="mySwiper"
+    >
+      <div className="flex flex-col justify-center items-center pb-10 max-w-max mx-auto">
+        <SwiperSlide>
+          <div className="pt-10 text-center leading-10">
+            <div className="flex justify-center items-end">
+              <button
+                className="h-full mr-16 opacity-50 hover:opacity-100 cursor-pointer"
+                onClick={() => swiper.slideNext()}
+              >
+                <img
+                  src={prev}
+                  alt="previous"
+                  style={{
+                    width: "50px",
+                    height: "26px",
+                  }}
+                />
+              </button>
+
+              <p className="text-4xl tracking-wider">Coming Products</p>
+              <button
+                className="h-full ml-16 opacity-50 hover:opacity-100 cursor-pointer"
+                onClick={() => swiper.slideNext()}
+              >
+                <img
+                  src={next}
+                  alt="next"
+                  style={{
+                    width: "50px",
+                    height: "26px",
+                  }}
+                />
+              </button>
+            </div>
+            <p className="text-gray-400">
+              Explore best listings around the world by city
+            </p>
+          </div>
+          <div className="max-w-2xl mx-auto pt-6 pb-24 md:pb-16 px-8 sm:px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+              {products &&
+                products.map((product, index) => (
+                  <a key={index} href={product.href} className="group">
+                    <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+                      <img
+                        src={product.path}
+                        alt="product img"
+                        className="w-full h-full object-center object-cover group-hover:opacity-75"
+                      />
+                    </div>
+                    <h3 className="mt-4 text-sm text-gray-700">
+                      {product.name}
+                    </h3>
+                    <div className="flex justify-start items-center">
+                      <p className="mt-1 text-lg font-medium text-gray-900">
+                        {product.price}
+                      </p>
+                      <del className="mt-1 ml-8 text-lg font-medium text-gray-400">
+                        $12334
+                      </del>
+                    </div>
+                  </a>
+                ))}
+            </div>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <>
+            <div className=" pt-10 text-center leading-10">
+              <div className="flex justify-center items-end">
+                <div className="h-full mr-16 opacity-50 hover:opacity-100 cursor-pointer">
+                  <img
+                    src={prev}
+                    alt="previous"
+                    style={{
+                      width: "50px",
+                      height: "26px",
+                    }}
+                    onClick={() => swiper.slideNext()}
+                  />
+                </div>
+
+                <p className="text-4xl tracking-wider">Latest Products</p>
+                <div className="h-full ml-16 opacity-50 hover:opacity-100 cursor-pointer">
+                  <img
+                    src={next}
+                    alt="next"
+                    style={{
+                      width: "50px",
+                      height: "26px",
+                    }}
+                    onClick={() => swiper.slideNext()}
+                  />
+                </div>
+              </div>
+              <p className="text-gray-400">
+                Explore best listings around the world by city
+              </p>
+            </div>
+            <div className="max-w-2xl mx-auto pt-6 pb-24 md:pb-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+              <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                {products &&
+                  products.map((product, index) => (
+                    <a key={index} href={product.href} className="group">
+                      <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+                        <img
+                          src={product.path}
+                          alt="product img"
+                          className="w-full h-full object-center object-cover group-hover:opacity-75"
+                        />
+                      </div>
+                      <h3 className="mt-4 text-sm text-gray-700">
+                        {product.name}
+                      </h3>
+                      <div className="flex justify-start items-center">
+                        <p className="mt-1 text-lg font-medium text-gray-900">
+                          {product.price}
+                        </p>
+                        <del className="mt-1 ml-8 text-lg font-medium text-gray-400">
+                          $12334
+                        </del>
+                      </div>
+                    </a>
+                  ))}
+              </div>
+            </div>
+          </>
+        </SwiperSlide>
+
+        <div className="text-center mt-10 leading-10">
+          <p className="text-xl sm:text-4xl">Trusted By Over 4000+ Users</p>
+          <p className="text-sm pt-2 sm:text-lg text-gray-400">
+            Here is what people say about Direo
+          </p>
+        </div>
+        {props.children}
       </div>
-      <div className="container grid md:grid-cols-2 pt-5 gap-6 px-5 md:px-0">
-        <div className="relative w-full overflow-hidden rounded-lg">
-          <img
-            className="min-w-full"
-            src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bG9uZG9ufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt="NewYork City"
-          />
-          <div className="absolute top-4 left-5 text-white">
-            <p className="font-semibold">London, UK</p>
-            <span className="text-sm">68 Listings</span>
-          </div>
-        </div>
-        <div className="relative w-full overflow-hidden rounded-lg">
-          <img
-            className="min-w-full"
-            src="https://images.unsplash.com/photo-1518235506717-e1ed3306a89b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fG5ld3lvcmt8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt="NewYork City"
-          />
-          <div className="absolute top-4 left-5 text-white">
-            <p className="font-semibold">London, UK</p>
-            <span className="text-sm">68 Listings</span>
-          </div>
-        </div>
-        <div className="relative w-full overflow-hidden rounded-lg">
-          <img
-            className="min-w-full"
-            src="https://images.unsplash.com/photo-1551352912-484163ad5be9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHN5ZG5leXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60"
-            alt="NewYork City"
-          />
-          <div className="absolute top-4 left-5 text-white">
-            <p className="font-semibold">Sydney</p>
-            <span className="text-sm">68 Listings</span>
-          </div>
-        </div>
-        <div className="relative w-full overflow-hidden rounded-lg">
-          <img
-            className="min-w-full"
-            src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGFyaXN8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
-            alt="NewYork City"
-          />
-          <div className="absolute top-4 left-5 text-white">
-            <p className="font-semibold">Paris</p>
-            <span className="text-sm">68 Listings</span>
-          </div>
-        </div>
-      </div>
-      <div className="text-center mt-10 leading-10">
-        <p className="text-xl sm:text-4xl">Trusted By Over 4000+ Users</p>
-        <p className="text-sm pt-2 sm:text-lg text-gray-400">
-          Here is what people say about Direo
-        </p>
-      </div>
-      {props.children}
-    </div>
+    </Swiper>
   );
 }
 
@@ -825,11 +880,13 @@ function Section6() {
       >
         {brands.map((items, index) => (
           <SwiperSlide key={index}>
-            <img
-              className="w-32 h-20 md:w-48 md:h-36"
-              src={items.logo}
-              alt="Shoes band"
-            />
+            <a href={items.about}>
+              <img
+                className="w-32 h-20 md:w-48 md:h-36 opacity-50 hover:opacity-100 cursor-pointer"
+                src={items.logo}
+                alt="Shoes band"
+              />
+            </a>
           </SwiperSlide>
         ))}
       </Swiper>
