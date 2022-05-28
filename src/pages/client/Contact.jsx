@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { About, Footer } from "./Home";
 import { NavPage } from "../../components/Context/NavPage";
 import { HeaderCategories } from "./Categories";
-import { fetchCart } from "../../API/clientAPI";
+import { fetchCart, sendFeedBack } from "../../API/clientAPI";
 
 import { FcManager, FcIphone, FcGoogle } from "react-icons/fc";
 import { RiCompassDiscoverLine } from "react-icons/ri";
@@ -299,6 +299,7 @@ function ContactForm({ id }) {
   const formik = useFormik({
     initialValues,
     onSubmit: () => {
+      console.log(":asdasdasd");
       sendEmail();
     },
     validationSchema,
@@ -412,6 +413,9 @@ function ContactForm({ id }) {
                 <button
                   type="submit"
                   className="w-full py-2 px-4 sm:py-2 sm:px-10 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer"
+                  onClick={() =>
+                    sendFeedBack(info.email, formik.values.message)
+                  }
                 >
                   <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
                     Send
