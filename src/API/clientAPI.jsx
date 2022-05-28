@@ -69,6 +69,20 @@ const getBrands = () => {
     });
 };
 
+const sendFeedBack = (email, message) => {
+  return axios
+    .post(`${host}/sendMail/feedback`, {
+      client: email,
+      content: message,
+    })
+    .then(({ data }) => {
+      return data;
+    })
+    .catch((err) => {
+      console.log(`%c ${err}`, "color: red");
+    });
+};
+
 export {
   fetchCart,
   fetchProducts,
@@ -76,4 +90,5 @@ export {
   postProduct,
   removeItem,
   getBrands,
+  sendFeedBack,
 };
