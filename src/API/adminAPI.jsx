@@ -1,6 +1,6 @@
 const axios = require("axios").default;
-// const host = "https://be-shoes-web.herokuapp.com";
-const host = "http://localhost:3001";
+const host = "https://be-shoes-web.herokuapp.com";
+// const host = "http://localhost:3001";
 const fetchUser = () => {
   return (
     axios
