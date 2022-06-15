@@ -6,25 +6,14 @@ import "swiper/swiper-bundle.min.css";
 
 import { fetchProducts, getBrands } from "../../API/clientAPI";
 import { Cart } from "../../components/Modal";
-import { Project } from "../../components/home/Project";
+
 import { Item } from "../../components/home/Shoes";
 import { NavPage, UsersContext } from "../../components/Context/NavPage";
 
-import srcPro1 from "../../img/project1.jpg";
-import srcPro2 from "../../img/project3.jpg";
-import srcPro3 from "../../img/project4.jpg";
-
-import { IoRestaurantOutline } from "react-icons/io5";
-import { MdPlace } from "react-icons/md";
-import {
-  AiOutlineShoppingCart,
-  AiOutlineApple,
-  AiOutlineTwitter,
-} from "react-icons/ai";
+import { AiOutlineApple, AiOutlineTwitter } from "react-icons/ai";
 import { DiAndroid } from "react-icons/di";
-import { BiBed } from "react-icons/bi";
-import { BsBank } from "react-icons/bs";
-import { FaGlassMartiniAlt, FaFacebookF } from "react-icons/fa";
+
+import { FaFacebookF } from "react-icons/fa";
 import { GoOctoface } from "react-icons/go";
 import { TiSocialInstagram, TiSocialGooglePlus } from "react-icons/ti";
 
@@ -450,55 +439,6 @@ function Header() {
           ))}
       </Swiper>
     </>
-  );
-}
-
-function Categories() {
-  return (
-    <div className="flex flex-col justify-center items-center pt-20">
-      <div className="text-black text-center">
-        <p
-          after="Discover best things by your own style"
-          className="after:content-[attr(after)] after:block after:text-sm after:mt-3 after:text-gray_7a82a6 text-xl md:text-4xl leading-loose"
-        >
-          Trending Brands
-        </p>
-      </div>
-
-      {/* Project Components */}
-      <div className="container md:w-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-5 mt-10 gap-6">
-        <Project
-          src={srcPro1}
-          title={"Restaurant"}
-          logo={<IoRestaurantOutline size={30} style={{ color: "white" }} />}
-        />
-        <Project
-          src={srcPro2}
-          title={"Places & Destination"}
-          logo={<MdPlace size={30} style={{ color: "white" }} />}
-        />
-        <Project
-          src={srcPro3}
-          title={"Shopping & Store"}
-          logo={<AiOutlineShoppingCart size={30} style={{ color: "white" }} />}
-        />
-        <Project
-          src={srcPro1}
-          title={"Art & History"}
-          logo={<BiBed size={30} style={{ color: "white" }} />}
-        />
-        <Project
-          src={srcPro2}
-          title={"Hotel & Travel"}
-          logo={<BsBank size={30} style={{ color: "white" }} />}
-        />
-        <Project
-          src={srcPro3}
-          title={"Food & Drink"}
-          logo={<FaGlassMartiniAlt size={30} style={{ color: "white" }} />}
-        />
-      </div>
-    </div>
   );
 }
 
@@ -1130,9 +1070,6 @@ function Home() {
       <NavPage />
       <Header />
 
-      {/* <section>
-        <Categories />
-      </section> */}
       <section>
         <Products />
       </section>

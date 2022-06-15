@@ -17,8 +17,8 @@ import { firebaseApp } from "../../firebase/initializeApp";
 import "./home.css";
 
 const axios = require("axios").default;
-const host = "https://be-shoes-web.herokuapp.com";
-// const host = "http://localhost:3001";
+// const host = "https://be-shoes-web.herokuapp.com";
+const host = "http://localhost:3001";
 const auth = getAuth(firebaseApp);
 const provider_Google = new GoogleAuthProvider();
 const provider_Facebook = new FacebookAuthProvider();
@@ -92,7 +92,6 @@ function Login() {
         FacebookAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const { email, displayName, photoURL } = result.user;
-        console.log(email, displayName, photoURL);
         let { data } = await axios.post(`${host}/facebook/oath-client`, {
           email,
           displayName,
