@@ -18,7 +18,7 @@ import {
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
 // Site
-import { ProductsSite } from "./Products";
+import { InsertProduct, ProductsSite } from "./Products";
 import { CustomersSite } from "./Customers";
 import { AccountSite } from "./Account";
 import { fetchUser } from "../../API/adminAPI";
@@ -409,21 +409,6 @@ function DashboardSite() {
   );
 }
 
-// const fetchInfo = () => {
-//   // const api = "https://intense-retreat-81423.herokuapp.com";
-//   return (
-//     axios
-//       // .get(`${api}/dashboard/account`)
-//       .get(`/dashboard/account`)
-//       .then(({ data }) => {
-//         return data;
-//       })
-//       .catch((err) => {
-//         console.log(`%c ${err}`, "color: red");
-//       })
-//   );
-// };
-
 // AdminArticle
 function AdminArticle({ account }) {
   return (
@@ -475,6 +460,11 @@ function AdminArticle({ account }) {
         <Route exact path="/dashboard/account" component={AccountSite} />
         <Route exact path="/dashboard/customers" component={CustomersSite} />
         <Route exact path="/dashboard/products/" component={ProductsSite} />
+        <Route
+          exact
+          path="/dashboard/products/insert"
+          component={InsertProduct}
+        />
       </Switch>
     </div>
   );
