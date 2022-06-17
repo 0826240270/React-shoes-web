@@ -2,11 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Spin } from "react-cssfx-loading";
+
+import { storage } from "../../firebase/initializeApp";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import { UpSearch } from "./Customers";
 import { Pagination } from "../client/Categories";
 
-import { fetchProductsAdmin, uploadProduct } from "../../API/adminAPI";
+import { fetchProductsAdmin } from "../../API/adminAPI";
 import { Hypnosis } from "react-cssfx-loading";
+
+const axios = require("axios").default;
+const host = "http://localhost:3001";
 
 function ListProducts({ name }) {
   const [products, setProducts] = useState([]);
@@ -165,6 +172,7 @@ function InsertProduct() {
   const initialValues = {
     name: "",
     status: "",
+    path: "",
     price: 0,
     quantity: 0,
   };
@@ -175,6 +183,7 @@ function InsertProduct() {
       .required("Can't missing product name *"),
     status: Yup.string(),
     price: Yup.number(),
+    path: Yup.mixed().required("Please select your product image *"),
     quantity: Yup.number(),
   });
 
@@ -184,13 +193,27 @@ function InsertProduct() {
     // POST HTTP lên cho server;
     onSubmit: async (values) => {
       setLoading(true);
+      const formData = new FormData();
       try {
-        let { name, status, price, quantity } = values;
-        let { data } = await uploadProduct(name, status, price, quantity);
+        // Upload avatar to firebase storage
+        const storageRef = ref(storage, `${values.path.name}`);
+        await uploadBytes(storageRef, values.path).then(() => {
+          console.log("Upload image success !");
+        });
+
+        let url_path = await getDownloadURL(ref(storage, values.path.name));
+        formData.append("path", url_path);
+        formData.append("name", values.name);
+        formData.append("status", values.status);
+        formData.append("price", values.price);
+        formData.append("quantity", values.quantity);
         console.log(
-          "🚀 ~ file: Products.jsx ~ line 190 ~ onSubmit: ~ data",
-          data
+          "🚀 ~ file: Products.jsx ~ line 211 ~ onSubmit: ~ formData",
+          formData
         );
+
+        await axios.post(`${host}/admin/insertProducts`, formData);
+
         // if (data.success) {
         //   // setShowModal(data.success);
         // }
@@ -228,21 +251,32 @@ function InsertProduct() {
               </video>
             </div>
             <span className="font-Inter text-sm text-[#65748b] py-1">
-              Drag image to center
+              PNG, JPG, GIF up to 10MB
             </span>
             <span className="font-Inter text-sm text-[#65748b]">{`${now.getUTCDate()}/${now.getUTCMonth()}/${now.getUTCFullYear()} ${now.getHours()}h:${now.getMinutes()}m:${now.getSeconds()}s`}</span>
           </div>
           <div className="pt-3">
-            <label htmlFor="file-upload">
+            <label htmlFor="path">
               <div className="px-1 py-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
                 <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
                   Upload picture
                   <input
-                    id="file-upload"
-                    name="file-upload"
+                    id="path"
+                    name="path"
                     type="file"
                     className="sr-only"
+                    onChange={(event) => {
+                      formik.setFieldValue(
+                        "path",
+                        event.currentTarget.files[0]
+                      );
+                    }}
                   />
+                  {formik.touched.path && formik.errors.path ? (
+                    <p className="animate-pulse text-[#f2566e] text-sm md:text-base">
+                      {formik.errors.path}
+                    </p>
+                  ) : null}
                 </p>
               </div>
             </label>

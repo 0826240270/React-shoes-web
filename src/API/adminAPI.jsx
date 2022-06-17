@@ -43,21 +43,4 @@ const fetchCustomers = () => {
   );
 };
 
-const uploadProduct = async (name, status, quantity, price) => {
-  try {
-    let result = await axios.post(`${host}/admin/insertProducts`, {
-      name,
-      status,
-      quantity,
-      price,
-    });
-    console.log(
-      "🚀 ~ file: adminAPI.jsx ~ line 54 ~ uploadProduct ~ result",
-      result
-    );
-  } catch (error) {
-    console.log(`%c ${error}`, "color: red");
-  }
-};
-
-export { fetchUser, fetchProductsAdmin, fetchCustomers, uploadProduct };
+export { fetchUser, fetchProductsAdmin, fetchCustomers };
