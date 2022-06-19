@@ -12,6 +12,10 @@ import { Pagination } from "../client/Categories";
 import { fetchProductsAdmin } from "../../API/adminAPI";
 import { Hypnosis } from "react-cssfx-loading";
 
+import newIcon from "../../img/new.png";
+import popularIcon from "../../img/popular.png";
+import saleIcon from "../../img/sale.png";
+
 const axios = require("axios").default;
 const host = "http://localhost:3001";
 
@@ -167,24 +171,28 @@ function ProductsSite() {
 function InsertProduct() {
   let [now, setNow] = useState(new Date());
   let [select, setSelect] = useState(false);
-  const [loading, setLoading] = useState(false);
-  let status = ["Popular", "New", "Sale"];
+  let [loading, setLoading] = useState(false);
+  let ls_status = [
+    { path: popularIcon, status: "Popular" },
+    { path: newIcon, status: "New" },
+    { path: saleIcon, status: "Sale" },
+  ];
   const initialValues = {
     name: "",
     status: "",
     path: "",
     price: 0,
     quantity: 0,
+    src: "",
   };
 
   let validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .matches("^[a-zA-Z]+$", "You can only type letter")
-      .required("Can't missing product name *"),
+    name: Yup.string().required("Can't missing product name *"),
     status: Yup.string(),
     price: Yup.number(),
     path: Yup.mixed().required("Please select your product image *"),
     quantity: Yup.number(),
+    src: Yup.mixed(),
   });
 
   const formik = useFormik({
@@ -207,12 +215,10 @@ function InsertProduct() {
         formData.append("status", values.status);
         formData.append("price", values.price);
         formData.append("quantity", values.quantity);
-        console.log(
-          "🚀 ~ file: Products.jsx ~ line 211 ~ onSubmit: ~ formData",
-          formData
-        );
 
-        await axios.post(`${host}/admin/insertProducts`, formData);
+        await axios.post(`${host}/admin/insertProducts`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
 
         // if (data.success) {
         //   // setShowModal(data.success);
@@ -229,72 +235,79 @@ function InsertProduct() {
     setNow(new Date());
   }, 1000);
 
+  // Change select status in formdata
+  const selected = (formik, item) => {
+    formik.values.status = item.status;
+    formik.values.src = item.path;
+    setSelect(!select);
+  };
+
   return (
     <div className="max-w-6xl pt-16 mx-auto">
       <p className="font-bold ml-5 text-3xl lg:ml-0"> New product</p>
-      <div className="flex flex-wrap flex-col md:flex-row pt-8">
+      <form onSubmit={formik.handleSubmit}>
         {/* Left */}
-        <div className="w-full px-5 lg:px-0 md:w-[30%]">
-          <div className="flex flex-col justify-center items-center px-6 py-8 rounded-md shadow-all-rounded">
-            <div>
-              <video
-                className="max-w-full"
-                autoPlay="autoplay"
-                muted="muted"
-                loop="loop"
-                poster="https://cdnl.iconscout.com/lottie/premium/thumb/upload-data-to-cloud-4894787-4138955.mp4"
-              >
-                <source
-                  type="video/mp4"
-                  src="https://cdnl.iconscout.com/lottie/premium/thumb/upload-data-to-cloud-4894787-4138955.mp4"
-                />
-              </video>
-            </div>
-            <span className="font-Inter text-sm text-[#65748b] py-1">
-              PNG, JPG, GIF up to 10MB
-            </span>
-            <span className="font-Inter text-sm text-[#65748b]">{`${now.getUTCDate()}/${now.getUTCMonth()}/${now.getUTCFullYear()} ${now.getHours()}h:${now.getMinutes()}m:${now.getSeconds()}s`}</span>
-          </div>
-          <div className="pt-3">
-            <label htmlFor="path">
-              <div className="px-1 py-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
-                <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
-                  Upload picture
-                  <input
-                    id="path"
-                    name="path"
-                    type="file"
-                    className="sr-only"
-                    onChange={(event) => {
-                      formik.setFieldValue(
-                        "path",
-                        event.currentTarget.files[0]
-                      );
-                    }}
+        <div className="flex flex-wrap flex-col md:flex-row pt-8">
+          <div className="w-full px-5 lg:px-0 md:w-[30%]">
+            <div className="flex flex-col justify-center items-center px-6 py-8 rounded-md shadow-all-rounded">
+              <div>
+                <video
+                  className="max-w-full"
+                  autoPlay="autoplay"
+                  muted="muted"
+                  loop="loop"
+                  poster="https://cdnl.iconscout.com/lottie/premium/thumb/upload-data-to-cloud-4894787-4138955.mp4"
+                >
+                  <source
+                    type="video/mp4"
+                    src="https://cdnl.iconscout.com/lottie/premium/thumb/upload-data-to-cloud-4894787-4138955.mp4"
                   />
-                  {formik.touched.path && formik.errors.path ? (
-                    <p className="animate-pulse text-[#f2566e] text-sm md:text-base">
-                      {formik.errors.path}
-                    </p>
-                  ) : null}
-                </p>
+                </video>
               </div>
-            </label>
+              <span className="font-Inter text-sm text-[#65748b] py-1">
+                PNG, JPG, GIF up to 10MB
+              </span>
+              <span className="font-Inter text-sm text-[#65748b]">{`${now.getUTCDate()}/${now.getUTCMonth()}/${now.getUTCFullYear()} ${now.getHours()}h:${now.getMinutes()}m:${now.getSeconds()}s`}</span>
+            </div>
+            <div className="pt-3">
+              <label htmlFor="path">
+                <div className="px-1 py-3 border-2 hover:border-opacity-60 rounded-md shadow-all-rounded transition-colors duration-500 hover:border-[#5048e5] cursor-pointer">
+                  <p className="w-full text-center font-Inter font-semibold text-[#5048e5]">
+                    Upload picture
+                    <input
+                      id="path"
+                      name="path"
+                      type="file"
+                      className="sr-only"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "path",
+                          event.currentTarget.files[0]
+                        );
+                      }}
+                    />
+                    {formik.touched.path && formik.errors.path ? (
+                      <p className="animate-pulse text-[#f2566e] text-sm md:text-base font-normal">
+                        {formik.errors.path}
+                      </p>
+                    ) : null}
+                  </p>
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
-        {/* Right */}
-        <div className="pt-16 w-full md:w-[70%] md:pt-0 md:pl-6">
-          <div className="sm:px-6 sm:pb-8">
-            <h3 className="ml-5 md:ml-0 text-lg font-medium leading-6 text-gray-900">
-              Product information
-            </h3>
-            <p className="mt-1 ml-5 md:ml-0 text-sm text-[#65748b]">
-              This information of product will be saved to the database.
-            </p>
-          </div>
+          {/* Right */}
+          <div className="pt-16 w-full md:w-[70%] md:pt-0 md:pl-6">
+            <div className="sm:px-6 sm:pb-8">
+              <h3 className="ml-5 md:ml-0 text-lg font-medium leading-6 text-gray-900">
+                Product information
+              </h3>
+              <p className="mt-1 ml-5 md:ml-0 text-sm text-[#65748b]">
+                This information of product will be saved to the database.
+              </p>
+            </div>
 
-          <div className="mt-5 md:mt-0 md:col-span-2">
-            <form onSubmit={formik.handleSubmit}>
+            <div className="mt-5 md:mt-0 md:col-span-2">
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -339,11 +352,21 @@ function InsertProduct() {
                         >
                           <span className="flex items-center">
                             <img
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                              src={formik.values.src || popularIcon}
                               alt=""
                               className="flex-shrink-0 h-6 w-6 rounded-full"
                             />
-                            <span className="ml-3 block truncate">New</span>
+                            <span
+                              className={`${
+                                formik.values.status.toUpperCase() === "POPULAR"
+                                  ? "text-pink_f5548e"
+                                  : formik.values.status.toUpperCase() === "NEW"
+                                  ? "text-blue-500"
+                                  : "text-yellow-500"
+                              } + " font-semibold ml-3 block truncate"`}
+                            >
+                              {formik.values.status || "Popular"}
+                            </span>
                           </span>
                           <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <svg
@@ -373,36 +396,37 @@ function InsertProduct() {
                           aria-labelledby="listbox-label"
                           aria-activedescendant="listbox-option-3"
                         >
-                          {status &&
-                            status.map((item, index) => (
+                          {ls_status &&
+                            ls_status.map((item, index) => (
                               <li
                                 key={index}
                                 className="text-gray-900 select-auto relative py-2 pl-3 pr-9 cursor-pointer"
                                 id="listbox-option-0"
                                 aria-selected="true"
                                 role="option"
-                                onClick={() => (formik.values.status = item)}
+                                onClick={() => selected(formik, item)}
                               >
                                 <div className="flex items-center">
                                   <img
-                                    src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    src={item.path}
                                     alt=""
                                     className="flex-shrink-0 h-6 w-6 rounded-full"
                                   />
 
                                   <span
                                     className={`${
-                                      (item.toString().toUpperCase() ===
+                                      (item.status.toString().toUpperCase() ===
                                       "POPULAR"
                                         ? "text-pink_f5548e"
-                                        : item.toString().toUpperCase() ===
-                                          "NEW"
+                                        : item.status
+                                            .toString()
+                                            .toUpperCase() === "NEW"
                                         ? "text-blue-500"
                                         : "text-yellow-500") +
                                       " font-semibold ml-3 block truncate"
                                     }`}
                                   >
-                                    {item}
+                                    {item.status}
                                   </span>
                                 </div>
 
@@ -492,10 +516,10 @@ function InsertProduct() {
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

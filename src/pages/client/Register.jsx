@@ -77,7 +77,9 @@ function FormRegister() {
         formData.append("avatar", url_path);
         formData.append("passwo_", values.passwo_);
         formData.append("address", values.address);
-        const { data } = await axios.post(`${host}/register`, formData);
+        const { data } = await axios.post(`${host}/register`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
         // const { data } = await axios.post(`/register`, formData);
         if (data.success) {
           setShowModal(data.success);
