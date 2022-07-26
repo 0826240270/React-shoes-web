@@ -268,13 +268,14 @@ const validationSchema = Yup.object().shape({
 function ContactForm({ id }) {
   const [info, setInfo] = useState("");
   useEffect(() => {
-    fetchCart()
-      .then((result) => {
-        setInfo(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    (async () => {
+      try {
+        let data = await fetchCart();
+        setInfo(data || []);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, []);
 
   const form = useRef();

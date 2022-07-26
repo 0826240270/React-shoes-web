@@ -168,7 +168,7 @@ function DetailProduct(props) {
           {/* Options */}
           <div className="mt-4 lg:mt-0 lg:row-span-3">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl text-gray-900">{detailProducts.price}</p>
+            <p className="text-3xl text-gray-900">{postProduct.price}</p>
 
             {/* Reviews */}
             <div className="mt-6">

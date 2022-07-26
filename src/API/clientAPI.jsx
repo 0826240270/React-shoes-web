@@ -2,43 +2,38 @@ const axios = require("axios").default;
 // const host = "https://be-shoes-web.herokuapp.com";
 const host = "http://localhost:3001";
 
-const fetchCart = () => {
-  return axios
-    .get(`${host}/home`)
-    .then((res) => {
-      localStorage.setItem("cart", JSON.stringify(res.data.cart));
-      return res.data.infor;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
+const fetchCart = async () => {
+  try {
+    let { data } = await axios.get(`${host}/home`);
+    localStorage.setItem("cart", JSON.stringify(data.cart));
+    return data.infor;
+  } catch (error) {
+    console.log(`%c ${error}`, "color: red");
+  }
 };
 
-const fetchProducts = () => {
-  return axios
-    .get(`${host}/categories`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(`%c  ${err}`, "color: red");
-    });
+const fetchProducts = async () => {
+  try {
+    let { data } = await axios.get(`${host}/categories`);
+    return data;
+  } catch (error) {
+    console.log(`%c  ${error}`, "color: red");
+  }
 };
 
-const fetchDetailProducts = (_id) => {
-  return axios
-    .get(`${host}/categories/${_id}`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
+const fetchDetailProducts = async (_id) => {
+  try {
+    let { data } = await axios.get(`${host}/categories/${_id}`);
+    return data;
+  } catch (error) {
+    console.log(`%c ${error}`, "color: red");
+  }
 };
 
 const postProduct = async (detailProducts, setSoldOut) => {
   try {
     let localCart = JSON.parse(localStorage.getItem("cart"));
+    localCart.push(detailProducts);
     localStorage.setItem("cart", JSON.stringify(localCart));
     let { data } = await axios.post(`${host}/categories/${detailProducts._id}`);
     if (data.status !== 400) {
@@ -50,37 +45,31 @@ const postProduct = async (detailProducts, setSoldOut) => {
   }
 };
 
-const removeItem = (index, items, removeItems) => {
-  let itemRemove = items[index];
+const removeItem = async (index, items, items_id) => {
   items.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(items));
-  removeItems(JSON.parse(localStorage.getItem("cart")));
-  axios.post(`${host}/categories/${itemRemove._id}?_method=PUT`, items);
+  await axios.post(`${host}/categories/${items_id}?_method=PUT`, items);
 };
 
-const getBrands = () => {
-  return axios
-    .get(`${host}/brands`)
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
-    });
+const getBrands = async () => {
+  try {
+    let { data } = await axios.get(`${host}/brands`);
+    return data;
+  } catch (error) {
+    console.log(`%c ${error}`, "color: red");
+  }
 };
 
-const sendFeedBack = (email, message) => {
-  return axios
-    .post(`${host}/sendMail/feedback`, {
+const sendFeedBack = async (email, message) => {
+  try {
+    let { data } = await axios.post(`${host}/sendMail/feedback`, {
       client: email,
       content: message,
-    })
-    .then(({ data }) => {
-      return data;
-    })
-    .catch((err) => {
-      console.log(`%c ${err}`, "color: red");
     });
+    return data;
+  } catch (error) {
+    console.log(`%c ${error}`, "color: red");
+  }
 };
 
 export {

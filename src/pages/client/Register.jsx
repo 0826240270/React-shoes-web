@@ -11,8 +11,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ModalMessage } from "../../components/Modal";
 
 const axios = require("axios").default;
-const host = "https://be-shoes-web.herokuapp.com";
-
+// const host = "https://be-shoes-web.herokuapp.com";
+const host = "http://localhost:3001";
 // Init values data formik
 const initialValues = {
   firstName: "",

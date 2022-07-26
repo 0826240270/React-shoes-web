@@ -314,7 +314,7 @@ function InsertProduct() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-semibold text-indigo-500 text-opacity-90"
                       >
                         Name
                       </label>
@@ -337,7 +337,7 @@ function InsertProduct() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         id="listbox-label"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-semibold text-indigo-500 text-opacity-90"
                       >
                         Status
                       </label>
@@ -352,7 +352,7 @@ function InsertProduct() {
                         >
                           <span className="flex items-center">
                             <img
-                              src={formik.values.src || popularIcon}
+                              src={formik.values.src}
                               alt=""
                               className="flex-shrink-0 h-6 w-6 rounded-full"
                             />
@@ -365,7 +365,7 @@ function InsertProduct() {
                                   : "text-yellow-500"
                               } + " font-semibold ml-3 block truncate"`}
                             >
-                              {formik.values.status || "Popular"}
+                              {formik.values.status}
                             </span>
                           </span>
                           <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -454,7 +454,7 @@ function InsertProduct() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="quantity"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-semibold text-indigo-500 text-opacity-90"
                       >
                         Quantity
                       </label>

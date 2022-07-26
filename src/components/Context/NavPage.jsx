@@ -9,13 +9,14 @@ function NavPage() {
   const [info, setInfo] = useState([]);
 
   useEffect(() => {
-    fetchCart()
-      .then((data) => {
-        setInfo([data]);
-      })
-      .catch((err) => {
-        console.log(`%c ${err}`, "color: red");
-      });
+    (async () => {
+      try {
+        let data = await fetchCart();
+        setInfo([data] || []);
+      } catch (error) {
+        console.log(`%c ${error}`, "color: red");
+      }
+    })();
   }, []);
   return (
     <UsersContext.Provider value={info}>

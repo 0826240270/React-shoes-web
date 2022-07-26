@@ -43,4 +43,15 @@ const fetchCustomers = () => {
   );
 };
 
-export { fetchUser, fetchProductsAdmin, fetchCustomers };
+const uploadProduct = async (formData) => {
+  try {
+    const { data } = await axios.post(`${host}/admin/updateProfile`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return data;
+  } catch (error) {
+    console.log(`%c ${error}`, "color: red");
+  }
+};
+
+export { fetchUser, fetchProductsAdmin, fetchCustomers, uploadProduct };

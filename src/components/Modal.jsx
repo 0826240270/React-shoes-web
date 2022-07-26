@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { UserCircleIcon } from "@heroicons/react/outline";
@@ -10,9 +10,7 @@ import { XIcon } from "@heroicons/react/outline";
 import { removeItem } from "../API/clientAPI";
 
 function Cart({ open, setOpen }) {
-  const [items, removeItems] = useState(
-    JSON.parse(localStorage.getItem("cart")) || []
-  );
+  let items = JSON.parse(localStorage.getItem("cart")) || [];
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -100,7 +98,13 @@ function Cart({ open, setOpen }) {
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500 mr-4 sm:mr-0"
                                         onClick={() =>
-                                          removeItem(index, items, removeItems)
+                                          removeItem(
+                                            index,
+                                            JSON.parse(
+                                              localStorage.getItem("cart")
+                                            ),
+                                            item._id
+                                          )
                                         }
                                       >
                                         Remove
@@ -119,12 +123,14 @@ function Cart({ open, setOpen }) {
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
                       <p>
-                        {`$ ${items.length}` &&
-                          `$ ${items.reduce(
-                            (previousValue, currentValue) =>
-                              previousValue + currentValue.price,
-                            0
-                          )}`}
+                        {`$ ` +
+                          items
+                            .reduce(
+                              (previousValue, currentValue) =>
+                                previousValue + currentValue.price,
+                              0
+                            )
+                            .toFixed(2)}
                       </p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">
