@@ -155,7 +155,7 @@ export function Nav() {
               </svg>
               <span
                 className={
-                  countCart.length && countCart[0].cart.length > 0
+                  countCart.length && countCart[0]?.cart.length > 0
                     ? "bg-[#ffb020] absolute top-0 right-0 p-1 rounded-full"
                     : ""
                 }
@@ -196,7 +196,7 @@ export function Nav() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={countCart.length && countCart[0].avatar}
+                    src={countCart.length && countCart[0]?.avatar}
                     alt="avatar"
                   />
                 </button>
