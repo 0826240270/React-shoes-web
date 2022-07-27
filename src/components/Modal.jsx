@@ -10,7 +10,7 @@ import { XIcon } from "@heroicons/react/outline";
 import { removeItem } from "../API/clientAPI";
 
 function Cart({ open, setOpen }) {
-  let items = JSON.parse(localStorage.getItem("cart")) || [];
+  let items = JSON.parse(localStorage.getItem("cart"));
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -123,14 +123,15 @@ function Cart({ open, setOpen }) {
                     <div className="flex justify-between text-base font-medium text-gray-900">
                       <p>Subtotal</p>
                       <p>
-                        {`$ ` +
-                          items
-                            .reduce(
-                              (previousValue, currentValue) =>
-                                previousValue + currentValue.price,
-                              0
-                            )
-                            .toFixed(2)}
+                        {items &&
+                          `$ ` +
+                            items
+                              .reduce(
+                                (previousValue, currentValue) =>
+                                  previousValue + currentValue.price,
+                                0
+                              )
+                              .toFixed(2)}
                       </p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">

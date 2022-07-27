@@ -449,7 +449,7 @@ function AdminArticle({ account }) {
               />
             </button>
             <div className="hover:ring hover:ring-[#6366f1] hover:rounded-full hover:ring-opacity-60 cursor-pointer w-10 h-10 flex justify-center">
-              <img className="rounded-full" src={account.avatar} alt="Avatar" />
+              <img className="rounded-full" src={account?.avatar} alt="Avatar" />
             </div>
           </div>
         </nav>

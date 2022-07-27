@@ -5,7 +5,7 @@ const host = "http://localhost:3001";
 const fetchCart = async () => {
   try {
     let { data } = await axios.get(`${host}/home`);
-    localStorage.setItem("cart", JSON.stringify(data.cart));
+    localStorage.setItem("cart", JSON.stringify(data?.cart || []));
     return data.infor;
   } catch (error) {
     console.log(`%c ${error}`, "color: red");

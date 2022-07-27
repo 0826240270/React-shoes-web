@@ -65,9 +65,9 @@ function Login() {
           email: values.email,
           password: values.password,
         })
-        .then((res) => {
-          if (res.data.exist_Account) {
-            const { token, exist_Account, is_Admin } = res.data;
+        .then(({ data }) => {
+          if (data.exist_Account) {
+            const { token, exist_Account, is_Admin } = data;
             localStorage.setItem("token", token);
             setExist_Account(exist_Account);
             handleHistory(is_Admin);

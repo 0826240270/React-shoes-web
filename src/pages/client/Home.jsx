@@ -155,7 +155,7 @@ export function Nav() {
               </svg>
               <span
                 className={
-                  countCart.length && countCart[0]?.cart.length > 0
+                  countCart?.length && countCart[0]?.cart?.length > 0
                     ? "bg-[#ffb020] absolute top-0 right-0 p-1 rounded-full"
                     : ""
                 }
@@ -447,7 +447,7 @@ function Products() {
   useEffect(() => {
     (async () => {
       let result = await fetchProducts();
-      setProducts(result.splice(0, 6));
+      setProducts(result.splice(0, 6) || []);
     })();
   }, []);
   return (

@@ -35,7 +35,7 @@ const fetchCustomers = () => {
       .get(`${host}/dashboard/customers`)
       // .get(`/dashboard/customers`)
       .then(({ data }) => {
-        return data.customersList;
+        return data?.customersList;
       })
       .catch((err) => {
         console.log(`%c ${err}`, "color: red");
